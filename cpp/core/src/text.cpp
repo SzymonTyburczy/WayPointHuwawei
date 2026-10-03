@@ -129,7 +129,9 @@ std::string humaniseFull(const std::string& basename) {
 std::string humanise(const std::string& basename) {
   static const std::set<std::string> kPrefixes = {"ic", "icon", "icons", "img", "image", "btn", "button",
                                                   "baseline", "outline", "outlined", "filled", "round", "rounded",
-                                                  "sharp", "black", "white", "24dp", "24px", "48dp", "fill"};
+                                                  "sharp", "black", "white", "24dp", "24px", "48dp", "fill",
+                                                  // bundler path segments, e.g. "src_assets_icons_ic_gear"
+                                                  "src", "assets", "asset", "res", "drawable", "media", "images"};
   std::string out;
   for (const auto& t : fileTokens(basename)) {
     if (kPrefixes.count(t)) continue;

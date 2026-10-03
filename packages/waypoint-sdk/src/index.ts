@@ -43,5 +43,5 @@ export { WaypointProvider, type WaypointProviderProps } from './react/WaypointPr
 export { useGuide, useWaypointOverride } from './react/hooks';
 export { useWaypoint } from './react/context';
 export { GuideOverlay } from './react/GuideOverlay';
-export { AuditOverlay } from './react/AuditOverlay';
+export { AuditOverlay, type AuditOverlayProps } from './react/AuditOverlay';
 export { GuideBar } from './react/GuideBar';

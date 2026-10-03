@@ -172,7 +172,7 @@ export class Simulator {
         const ih = Math.min(ICON, h);
         add(b, depth + 1, { component: 'Image', frame: { x: PAD + (w - iw) / 2, y: y + (h - ih) / 2, w: iw, h: ih }, imageSrc: el.icon });
         if (go) this.handlers.set(el.testID, go);
-        return y + Math.max(h, ICON) + GAP;
+        return y + h + GAP;
       }
       case 'toggle': {
         const container = add(parent, depth, { component: 'View', frame: { x: 0, y, w: WINDOW.w, h: HEIGHTS.toggle } });

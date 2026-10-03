@@ -21,6 +21,8 @@ export interface WaypointProviderProps {
   guideOptions?: Partial<GuideOptions>;
   /** Speak captions through the platform module (stretch item 1). */
   speak?: boolean;
+  /** Whether a system back action makes sense right now (e.g. not on a root tab). */
+  canGoBack?: () => boolean;
   /** Test-only hook used by the demo app's evaluation autopilot. */
   onGuideStep?: (event: StepEvent) => void | Promise<void>;
 }
@@ -57,6 +59,8 @@ export function WaypointProvider(props: WaypointProviderProps) {
   const session = useRef<GuideSession | null>(null);
   const stepHook = useRef(props.onGuideStep);
   stepHook.current = props.onGuideStep;
+  const backHook = useRef(props.canGoBack);
+  backHook.current = props.canGoBack;
 
   const stopGuide = useCallback(() => {
     session.current?.stop();
@@ -74,6 +78,7 @@ export function WaypointProvider(props: WaypointProviderProps) {
         options: props.guideOptions,
         onState: setGuide,
         onStep: (e) => stepHook.current?.(e),
+        canGoBack: () => backHook.current?.() ?? true,
       });
       session.current = s;
       return s.start(goal);

@@ -1,23 +1,16 @@
-import { RNPackage, TurboModulesFactory } from '@rnoh/react-native-openharmony/ts';
-import type { TurboModule, TurboModuleContext } from '@rnoh/react-native-openharmony/ts';
+import { RNOHPackage } from '@rnoh/react-native-openharmony';
+import type { UITurboModule, UITurboModuleContext } from '@rnoh/react-native-openharmony/ts';
 import { WaypointPlatformTurboModule } from './WaypointPlatformTurboModule';
 
-class WaypointTurboModulesFactory extends TurboModulesFactory {
-  createTurboModule(name: string): TurboModule | null {
-    if (name === WaypointPlatformTurboModule.NAME) {
-      return new WaypointPlatformTurboModule(this.ctx);
-    }
-    return null;
+/** ArkTS half of the Waypoint package; the C++ half is src/main/cpp/WaypointPackage.h. */
+export class WaypointPackage extends RNOHPackage {
+  override getUITurboModuleFactoryByNameMap(): Map<string, (ctx: UITurboModuleContext) => UITurboModule | null> {
+    return new Map<string, (ctx: UITurboModuleContext) => UITurboModule | null>([
+      [WaypointPlatformTurboModule.NAME, (ctx: UITurboModuleContext) => new WaypointPlatformTurboModule(ctx)],
+    ]);
   }
 
-  hasTurboModule(name: string): boolean {
-    return name === WaypointPlatformTurboModule.NAME;
-  }
-}
-
-/** ArkTS half of the Waypoint package; the C++ half is WaypointPackage.h. */
-export class WaypointPackage extends RNPackage {
-  createTurboModulesFactory(ctx: TurboModuleContext): TurboModulesFactory {
-    return new WaypointTurboModulesFactory(ctx);
+  override getDebugName(): string {
+    return 'waypoint';
   }
 }

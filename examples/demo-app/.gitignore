@@ -1,0 +1,8 @@
+node_modules/
+harmony/entry/src/main/resources/rawfile/
+harmony/**/oh_modules/
+harmony/**/build/
+harmony/**/.hvigor/
+harmony/**/.cxx/
+harmony/entry/src/main/cpp/generated/
+harmony/local.properties

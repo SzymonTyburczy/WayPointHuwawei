@@ -1,0 +1,31 @@
+{
+  "name": "cityride",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Waypoint demo app with seeded accessibility defects (RFC-001 §12)",
+  "scripts": {
+    "start": "react-native start",
+    "typecheck": "tsc --noEmit",
+    "icons": "python3 tools/make_icons.py",
+    "codegen": "react-native codegen-harmony --cpp-output-path ./harmony/entry/src/main/cpp/generated --rnoh-module-path ./harmony/entry/oh_modules/@rnoh/react-native-openharmony",
+    "bundle:harmony": "react-native bundle-harmony --dev false --bundle-output ./harmony/entry/src/main/resources/rawfile/bundle.harmony.js --assets-dest ./harmony/entry/src/main/resources/rawfile/assets",
+    "dev": "react-native bundle-harmony --dev && react-native start"
+  },
+  "dependencies": {
+    "@react-native-oh/react-native-harmony": "0.77.75",
+    "react": "18.3.1",
+    "react-native": "0.77.1",
+    "waypoint-sdk": "file:../../packages/waypoint-sdk"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@react-native-community/cli": "^15.0.1",
+    "@react-native-community/cli-platform-android": "^15.0.1",
+    "@react-native-oh/react-native-harmony-cli": "0.77.75",
+    "@react-native/babel-preset": "0.77.1",
+    "@react-native/metro-config": "0.77.1",
+    "@react-native/typescript-config": "0.77.1",
+    "@types/react": "^18.3.12",
+    "typescript": "~5.6.3"
+  }
+}

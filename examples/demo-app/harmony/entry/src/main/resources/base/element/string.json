@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "Waypoint demo app"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Waypoint demo app"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "CityRide"
+    }
+  ]
+}

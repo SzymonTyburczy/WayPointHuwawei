@@ -1,11 +1,11 @@
 // ArkTS side of WaypointPlatform (stretch item 1: text-to-speech for captions).
 // Core Speech Kit availability is device- and region-dependent (RFC §16 sources);
 // every method degrades to a no-op instead of failing the guide.
-import { TurboModule } from '@rnoh/react-native-openharmony/ts';
+import { UITurboModule } from '@rnoh/react-native-openharmony/ts';
 import { textToSpeech } from '@kit.CoreSpeechKit';
 import { accessibility } from '@kit.AccessibilityKit';
 
-export class WaypointPlatformTurboModule extends TurboModule {
+export class WaypointPlatformTurboModule extends UITurboModule {
   static readonly NAME = 'WaypointPlatform';
   private engine: textToSpeech.TextToSpeechEngine | undefined = undefined;
   private requestId = 0;

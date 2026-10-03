@@ -251,6 +251,8 @@ TEST(humanise_file_names) {
   EXPECT_EQ(humaniseFull("ic_gear"), std::string("Ic gear"));
   EXPECT_EQ(humanise("icShoppingCart_24dp"), std::string("Shopping cart"));
   EXPECT_EQ(humanise("baseline_arrow_back_black_24"), std::string("Arrow back"));
+  // Release bundles flatten asset paths into the resource name.
+  EXPECT_EQ(humanise("src_assets_icons_ic_gear"), std::string("Gear"));
 }
 
 // --- String facade ---------------------------------------------------------

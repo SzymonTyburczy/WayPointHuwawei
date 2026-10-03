@@ -1,0 +1,21 @@
+{
+  "apiType": 'stageMode',
+  "buildOption": {
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      // -DWAYPOINT_WITH_LLAMA=ON links the on-device llama.cpp backend (cpp/llm).
+      "arguments": "-DWAYPOINT_WITH_LLAMA=OFF",
+      // x86_64 is required by the emulator (RFC §11).
+      "abiFilters": ["arm64-v8a", "x86_64"],
+    },
+  },
+  "targets": [
+    {
+      "name": "default",
+      "runtimeOS": "HarmonyOS"
+    },
+    {
+      "name": "ohosTest",
+    }
+  ]
+}

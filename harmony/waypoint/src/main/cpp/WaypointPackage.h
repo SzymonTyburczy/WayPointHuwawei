@@ -17,7 +17,7 @@ namespace waypoint::rnoh {
 
 class WaypointTurboModuleFactoryDelegate : public ::rnoh::TurboModuleFactoryDelegate {
  public:
-  ::rnoh::SharedTurboModule createTurboModule(Context ctx, const std::string& name) const override {
+  SharedTurboModule createTurboModule(Context ctx, const std::string& name) const override {
     if (name == WaypointCoreTurboModule::kName) return std::make_shared<WaypointCoreTurboModule>(ctx.jsInvoker);
 #ifdef WAYPOINT_WITH_LLAMA
     if (name == WaypointLlmTurboModule::kName) return std::make_shared<WaypointLlmTurboModule>(ctx.jsInvoker);

@@ -17,7 +17,12 @@ const RULE_TITLES: Record<string, string> = {
   R6: 'Unnamed image',
 };
 
-export function AuditOverlay() {
+export interface AuditOverlayProps {
+  /** Where the floating audit button sits; keep it clear of the app's own controls. */
+  fabPosition?: { right?: number; bottom?: number; top?: number; left?: number };
+}
+
+export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditOverlayProps) {
   const { runtime } = useWaypoint();
   const { width, height } = useWindowDimensions();
   const [result, setResult] = useState<AuditResult | null>(null);
@@ -129,7 +134,7 @@ export function AuditOverlay() {
         accessibilityRole="button"
         accessibilityLabel="Run accessibility audit"
         onPress={result && !panel ? () => setPanel(true) : run}
-        style={styles.fab}
+        style={[styles.fab, fabPosition]}
       >
         <Text style={styles.fabText}>{busy ? '…' : 'A11y'}</Text>
       </Pressable>
@@ -173,8 +178,6 @@ const styles = StyleSheet.create({
   actionText: { color: '#0D47A1', fontWeight: '700', fontSize: 15 },
   fab: {
     position: 'absolute',
-    right: 16,
-    bottom: 16,
     width: 56,
     height: 56,
     borderRadius: 28,
