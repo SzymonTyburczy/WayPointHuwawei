@@ -16,6 +16,13 @@ import { abilityAccessCtrl, Permissions } from '@kit.AbilityKit';
 const SPEECH_EVENT = 'WaypointSpeech';
 const MICROPHONE: Permissions = 'ohos.permission.MICROPHONE';
 
+// ArkTS rejects untyped object literals (arkts-no-untyped-obj-literals).
+interface SpeechEvent {
+  type: string;
+  text?: string;
+  message?: string;
+}
+
 export class WaypointPlatformTurboModule extends UITurboModule {
   static readonly NAME = 'WaypointPlatform';
 
@@ -66,7 +73,7 @@ export class WaypointPlatformTurboModule extends UITurboModule {
 
   // ---- speech in -------------------------------------------------------------
 
-  private emit(payload: Record<string, string>): void {
+  private emit(payload: SpeechEvent): void {
     this.ctx.rnInstance.emitDeviceEvent(SPEECH_EVENT, payload);
   }
 

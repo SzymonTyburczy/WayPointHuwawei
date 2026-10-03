@@ -15,6 +15,8 @@ add_library(waypoint_core STATIC
   src/text.cpp
 )
 target_include_directories(waypoint_core PUBLIC include)
+# PUBLIC: the headers use std::optional, and the RNOH build does not set a standard.
+target_compile_features(waypoint_core PUBLIC cxx_std_17)
 set_target_properties(waypoint_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   target_compile_options(waypoint_core PRIVATE -Wall -Wextra -Wpedantic)

@@ -14,10 +14,10 @@ set(OH_MODULES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../oh_modules") # requi
 
 add_subdirectory("${RNOH_CPP_DIR}" ./rn)
 
-# Waypoint native package (harmony/waypoint in the repository). ohpm may copy the
-# package into oh_modules, so point it at the repository for cpp/core explicitly.
+# Waypoint native package (harmony/waypoint in the repository). ohpm links it into
+# entry/oh_modules, not the project's oh_modules, so build it from the repository.
 set(WAYPOINT_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../.." CACHE PATH "Waypoint repository root" FORCE)
-add_subdirectory("${OH_MODULES_DIR}/@waypoint/react-native-waypoint/src/main/cpp" ./waypoint)
+add_subdirectory("${WAYPOINT_REPO_ROOT}/harmony/waypoint/src/main/cpp" ./waypoint)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/autolinking.cmake")
 
