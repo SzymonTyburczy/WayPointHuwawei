@@ -1,0 +1,8 @@
+[
+  {"rule": "R1", "testID": "header-settings"},
+  {"rule": "R2", "testID": "header-settings"},
+  {"rule": "R3", "testID": "member-since"},
+  {"rule": "R4", "testID": "edit-profile"},
+  {"rule": "R5", "testID": "edit-profile-2"},
+  {"rule": "R6", "testID": "promo-banner"}
+]

@@ -1,0 +1,15 @@
+{
+  "surfaceId": 1,
+  "viewport": {"x": 0, "y": 0, "w": 360, "h": 780},
+  "nodes": [
+    {"id": 1, "parent": null, "depth": 0, "component": "View", "frame": {"x": 0, "y": 0, "w": 360, "h": 780}, "bg": "#FFFFFF"},
+    {"id": 2, "parent": 1, "depth": 1, "component": "Paragraph", "frame": {"x": 16, "y": 16, "w": 200, "h": 32}, "text": "Profile", "fg": "#111111", "fontSize": 24, "bold": true, "a11y": {"accessible": true, "role": "header"}},
+    {"id": 3, "parent": 1, "depth": 1, "component": "View", "frame": {"x": 312, "y": 16, "w": 32, "h": 32}, "testID": "header-settings", "a11y": {"accessible": true, "role": "button"}},
+    {"id": 4, "parent": 3, "depth": 2, "component": "Image", "frame": {"x": 316, "y": 20, "w": 24, "h": 24}, "imageSrc": "ic_gear"},
+    {"id": 5, "parent": 1, "depth": 1, "component": "Paragraph", "frame": {"x": 16, "y": 64, "w": 300, "h": 20}, "text": "Member since 2021", "fg": "#AAAAAA", "fontSize": 14, "testID": "member-since"},
+    {"id": 6, "parent": 1, "depth": 1, "component": "View", "frame": {"x": 16, "y": 100, "w": 328, "h": 48}, "testID": "edit-profile", "a11y": {"accessible": true}},
+    {"id": 7, "parent": 6, "depth": 2, "component": "Paragraph", "frame": {"x": 32, "y": 112, "w": 200, "h": 24}, "text": "Edit profile", "fg": "#000000", "fontSize": 16, "a11y": {"accessible": true}},
+    {"id": 8, "parent": 1, "depth": 1, "component": "Image", "frame": {"x": 16, "y": 160, "w": 328, "h": 120}, "imageSrc": "banner_promo.png", "testID": "promo-banner"},
+    {"id": 9, "parent": 1, "depth": 1, "component": "View", "frame": {"x": 16, "y": 300, "w": 328, "h": 48}, "testID": "edit-profile-2", "a11y": {"accessible": true, "role": "button", "label": "Edit profile"}}
+  ]
+}
