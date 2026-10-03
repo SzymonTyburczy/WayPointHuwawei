@@ -102,12 +102,12 @@ LabelRequest labelRequest(const Snapshot& snap, int64_t nodeId) {
   req.grammar = kLabelGrammar;
   if (!ctx.image.empty()) {
     std::string fb = humanise(ctx.image);
-    if (validateLabel(snap, nodeId, fb).ok) req.fallback = fb;
+    if (validateLabel(snap, nodeId, fb, /*allowFileEcho=*/true).ok) req.fallback = fb;
   }
   return req;
 }
 
-LabelValidation validateLabel(const Snapshot& snap, int64_t nodeId, const std::string& label) {
+LabelValidation validateLabel(const Snapshot& snap, int64_t nodeId, const std::string& label, bool allowFileEcho) {
   LabelValidation v;
   const std::string norm = lower(trim(label));
   if (norm.empty()) {
@@ -132,7 +132,7 @@ LabelValidation validateLabel(const Snapshot& snap, int64_t nodeId, const std::s
       return v;
     }
   }
-  if (p >= 0) {
+  if (p >= 0 && !allowFileEcho) {
     std::string src = findImageSrc(snap, idx, p);
     if (!src.empty()) {
       std::string base = basenameOf(src);

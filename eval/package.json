@@ -9,7 +9,8 @@
     "guide": "tsx src/cli.ts guide",
     "golden": "tsx src/cli.ts golden",
     "all": "tsx src/cli.ts all",
-    "voice-demo": "tsx src/voiceDemo.ts"
+    "voice-demo": "tsx src/voiceDemo.ts",
+    "report": "tsx src/cli.ts report"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

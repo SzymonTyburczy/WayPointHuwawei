@@ -4,6 +4,7 @@
 //   npm run all -- --backend lexical           (CI smoke run, no model)
 //   npm run audit -- --backend none            (M2 + fallback-only M3)
 //   npm run golden                             (regenerate cpp/core/tests/golden/demo_*)
+//   npm run report                             (results/report.html, before/after wireframes)
 //
 // Flags: --backend lexical|remote|none  --url  --model  --conditions A,B,C
 //        --tasks 1,2,3  --phrasings 3  --out results/<name>  --seed 0
@@ -19,7 +20,10 @@ import { LexicalBackend } from './baseline';
 import { renderReport, successTable } from './report';
 import { runAudit, type Defect } from './runAudit';
 import { runGuide, type Task } from './runGuide';
+import { renderHtmlReport, type ScreenAudit } from './htmlReport';
 import { Simulator } from './simulator';
+import { suggestLabels } from '../../packages/waypoint-sdk/src/audit/suggest';
+import { screenById } from '../../examples/demo-app/src/app/spec';
 
 import defectsFile from '../defects.json';
 import tasksFile from '../tasks.json';
@@ -70,6 +74,7 @@ async function main() {
   const defects = defectsFile.defects as Defect[];
 
   if (cmd === 'golden') return golden(core, defects);
+  if (cmd === 'report') return report(core, defects, f);
 
   const backend = makeBackend(f);
   const info = backend ? await backend.info() : { kind: 'baseline' as const, model: 'none' };
@@ -106,6 +111,29 @@ async function main() {
 
   writeFileSync(join(out, 'results.md'), renderReport(meta, audit, trials));
   console.error(`Wrote ${join(out, 'results.md')}`);
+}
+
+/** HTML audit report: every screen before and after accepting the label suggestions. */
+async function report(core: ReturnType<typeof createCliCore>, defects: Defect[], f: Record<string, string>) {
+  const backend = f.backend && f.backend !== 'none' ? makeBackend(f) : null;
+  const info = backend ? await backend.info() : null;
+  const { overrides } = await runAudit(core, backend, defects);
+  const before = new Simulator(core, 'A');
+  const after = new Simulator(core, 'B', overrides);
+  const screens: ScreenAudit[] = [];
+  for (const id of Simulator.screenIds()) {
+    before.open(id);
+    after.open(id);
+    const b = before.snapshot();
+    const a = after.snapshot();
+    const { report: withFixes } = await suggestLabels(core, backend, b, core.audit(b));
+    screens.push({ id, title: screenById(id).title, before: { snapshot: b, report: withFixes }, after: { snapshot: a, report: core.audit(a) } });
+  }
+  const source = info && info.kind !== 'baseline' ? `model ${info.model}` : 'no-model fallback labels';
+  const html = renderHtmlReport({ app: 'CityRide', generated: new Date().toISOString(), commit: gitCommit(), suggestionSource: source }, screens);
+  const out = resolve(__dirname, '..', f.out ?? 'results/report.html');
+  writeFileSync(out, html);
+  console.error(`Wrote ${out}`);
 }
 
 /** Golden snapshots for the C++ tests: every screen in A and C with its expected findings. */

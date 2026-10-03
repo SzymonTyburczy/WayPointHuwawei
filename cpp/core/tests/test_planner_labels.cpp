@@ -271,3 +271,14 @@ TEST(api_end_to_end_plan_and_parse) {
   std::string action = api::parseAction("{\"a\":\"tap\",\"id\":2}", plan["candidates"].dump());
   EXPECT_EQ(action, std::string("{\"a\":\"tap\",\"id\":12,\"index\":2}"));
 }
+
+TEST(fallback_for_an_unprefixed_file_name_is_offered) {
+  Builder b;
+  b.add(1, std::nullopt, "View", {0, 0, 360, 780});
+  b.add(2, 1, "Image", {16, 100, 328, 120}).imageSrc = "promo_summer_sale.png";
+  Snapshot s = b.done();
+  LabelRequest req = labelRequest(s, 2);
+  EXPECT_EQ(req.fallback, std::string("Promo summer sale"));
+  // The same words from the model are still an echo.
+  EXPECT_EQ(validateLabel(s, 2, "Promo summer sale").reason, std::string("file-name-echo"));
+}

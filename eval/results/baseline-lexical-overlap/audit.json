@@ -16,7 +16,11 @@
       "testID": "home-banner",
       "screen": "home",
       "severity": "warning",
-      "message": "Image has no accessible name"
+      "message": "Image has no accessible name",
+      "suggestion": {
+        "label": "Promo summer sale",
+        "confidence": "low"
+      }
     },
     {
       "rule": "R2",
@@ -284,6 +288,7 @@
   },
   "overrides": {
     "home-search": "Search",
+    "home-banner": "Promo summer sale",
     "tab-home": "Home",
     "tab-tickets": "Ticket",
     "tab-profile": "Person",
@@ -298,7 +303,7 @@
     "rejected": {
       "generic": 21
     },
-    "fallbacks": 19,
+    "fallbacks": 20,
     "backendFailures": 0
   }
 }

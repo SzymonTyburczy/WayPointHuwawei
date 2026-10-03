@@ -41,7 +41,9 @@ LabelContext buildLabelContext(const Snapshot& snap, int64_t nodeId);
 std::string formatLabelPrompt(const LabelContext& ctx);
 // Throws std::out_of_range when the node does not exist.
 LabelRequest labelRequest(const Snapshot& snap, int64_t nodeId);
-LabelValidation validateLabel(const Snapshot& snap, int64_t nodeId, const std::string& label);
+// allowFileEcho: the no-model fallback is a humanised file name by design, so it
+// skips the echo check; model output never does.
+LabelValidation validateLabel(const Snapshot& snap, int64_t nodeId, const std::string& label, bool allowFileEcho = false);
 // Extracts the label from a {"label":"..."} reply.
 std::optional<std::string> parseLabelReply(const std::string& text);
 // accessibilityLabel="Settings"
