@@ -20,6 +20,7 @@ import { LexicalBackend } from './baseline';
 import { renderReport, successTable } from './report';
 import { runAudit, type Defect } from './runAudit';
 import { runGuide, type Task } from './runGuide';
+import { crawl } from './crawl';
 import { renderHtmlReport, type ScreenAudit } from './htmlReport';
 import { Simulator } from './simulator';
 import { suggestLabels } from '../../packages/waypoint-sdk/src/audit/suggest';
@@ -127,10 +128,19 @@ async function report(core: ReturnType<typeof createCliCore>, defects: Defect[],
     const b = before.snapshot();
     const a = after.snapshot();
     const { report: withFixes } = await suggestLabels(core, backend, b, core.audit(b));
-    screens.push({ id, title: screenById(id).title, before: { snapshot: b, report: withFixes }, after: { snapshot: a, report: core.audit(a) } });
+    screens.push({
+      id,
+      title: screenById(id).title,
+      before: { snapshot: b, report: withFixes },
+      after: { snapshot: a, report: core.audit(a) },
+      speechBefore: core.announce(b).map((x) => x.text),
+      speechAfter: core.announce(a).map((x) => x.text),
+    });
   }
   const source = info && info.kind !== 'baseline' ? `model ${info.model}` : 'no-model fallback labels';
-  const html = renderHtmlReport({ app: 'CityRide', generated: new Date().toISOString(), commit: gitCommit(), suggestionSource: source }, screens);
+  const maps = { before: crawl(core, 'A'), after: crawl(core, 'B', overrides) };
+  writeFileSync(resolve(__dirname, '..', 'results/app-map.json'), JSON.stringify(maps, null, 1));
+  const html = renderHtmlReport({ app: 'CityRide', generated: new Date().toISOString(), commit: gitCommit(), suggestionSource: source }, screens, maps);
   const out = resolve(__dirname, '..', f.out ?? 'results/report.html');
   writeFileSync(out, html);
   console.error(`Wrote ${out}`);

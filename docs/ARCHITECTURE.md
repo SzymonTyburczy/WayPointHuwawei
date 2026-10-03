@@ -105,6 +105,20 @@ Deviations:
   focused on its own; if the ancestor is unnamed, R1 already reports it. The RFC
   says "no named accessible ancestor", which double-counts icon buttons.
 
+### Beyond the RFC: R8 and the screen-reader order
+
+`announce.cpp` lists the stops a screen reader makes: visible, not hidden, not grouped
+into an accessible ancestor, and accessible, a text, a text input or a switch. Each
+stop gets the utterance a TalkBack-style reader produces: name, spoken role
+("heading", "tab", "edit box"), states ("selected", "on", "disabled") and hint.
+An unnamed control is announced by its role alone, the "button, button" of the RFC's
+demo script. The list backs `WaypointCore.announce`, the voice command
+"read everything" and the audit panel's Listen button.
+
+R8 (warning, WCAG 2.4.3 Focus Order) walks that order and flags a stop that lies
+entirely above the previous one, or entirely to its left within the same row. It
+is not part of the score. The demo goldens confirm it raises nothing on the demo app.
+
 ## Label suggestions (RFC §8)
 
 `labels.cpp` builds the bounded context (component, role, image basename, testID,

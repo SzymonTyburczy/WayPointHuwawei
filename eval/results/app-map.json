@@ -1,0 +1,568 @@
+{
+ "before": {
+  "condition": "A",
+  "screens": [
+   {
+    "id": "home",
+    "title": "CityRide",
+    "depth": 0,
+    "byName": true
+   },
+   {
+    "id": "search",
+    "title": "Search",
+    "depth": 1,
+    "byName": false
+   },
+   {
+    "id": "journey",
+    "title": "Plan a journey",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "alerts",
+    "title": "Service alerts",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "tickets",
+    "title": "Tickets",
+    "depth": 1,
+    "byName": false
+   },
+   {
+    "id": "profile",
+    "title": "Profile",
+    "depth": 1,
+    "byName": false
+   },
+   {
+    "id": "settings",
+    "title": "Settings",
+    "depth": 1,
+    "byName": false
+   },
+   {
+    "id": "ticket-type",
+    "title": "Ticket type",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "ticket-history",
+    "title": "Ticket history",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "support",
+    "title": "Help",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "edit-profile",
+    "title": "Edit profile",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "logout",
+    "title": "Log out?",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "notifications",
+    "title": "Notifications",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "display",
+    "title": "Display",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "language",
+    "title": "Language",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "privacy",
+    "title": "Privacy",
+    "depth": 2,
+    "byName": false
+   },
+   {
+    "id": "contact",
+    "title": "Contact us",
+    "depth": 3,
+    "byName": false
+   },
+   {
+    "id": "font-size",
+    "title": "Font size",
+    "depth": 3,
+    "byName": false
+   },
+   {
+    "id": "privacy-policy",
+    "title": "Privacy policy",
+    "depth": 3,
+    "byName": false
+   }
+  ],
+  "edges": [
+   {
+    "from": "home",
+    "to": "search",
+    "testID": "home-search",
+    "name": ""
+   },
+   {
+    "from": "home",
+    "to": "journey",
+    "testID": "home-plan",
+    "name": "Plan a journey"
+   },
+   {
+    "from": "home",
+    "to": "alerts",
+    "testID": "home-alerts",
+    "name": "Service alerts"
+   },
+   {
+    "from": "home",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": ""
+   },
+   {
+    "from": "home",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": ""
+   },
+   {
+    "from": "home",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": ""
+   },
+   {
+    "from": "tickets",
+    "to": "ticket-type",
+    "testID": "tickets-buy",
+    "name": "Buy a ticket"
+   },
+   {
+    "from": "tickets",
+    "to": "ticket-history",
+    "testID": "tickets-history",
+    "name": "Ticket history"
+   },
+   {
+    "from": "tickets",
+    "to": "home",
+    "testID": "tab-home",
+    "name": ""
+   },
+   {
+    "from": "tickets",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": ""
+   },
+   {
+    "from": "tickets",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": ""
+   },
+   {
+    "from": "profile",
+    "to": "support",
+    "testID": "profile-help",
+    "name": ""
+   },
+   {
+    "from": "profile",
+    "to": "edit-profile",
+    "testID": "profile-edit",
+    "name": ""
+   },
+   {
+    "from": "profile",
+    "to": "logout",
+    "testID": "profile-logout",
+    "name": "Log out"
+   },
+   {
+    "from": "profile",
+    "to": "home",
+    "testID": "tab-home",
+    "name": ""
+   },
+   {
+    "from": "profile",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": ""
+   },
+   {
+    "from": "profile",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": ""
+   },
+   {
+    "from": "settings",
+    "to": "notifications",
+    "testID": "settings-notifications",
+    "name": "Notifications"
+   },
+   {
+    "from": "settings",
+    "to": "display",
+    "testID": "settings-display",
+    "name": "Display"
+   },
+   {
+    "from": "settings",
+    "to": "language",
+    "testID": "settings-language",
+    "name": "Language"
+   },
+   {
+    "from": "settings",
+    "to": "privacy",
+    "testID": "settings-privacy",
+    "name": "Privacy"
+   },
+   {
+    "from": "settings",
+    "to": "home",
+    "testID": "tab-home",
+    "name": ""
+   },
+   {
+    "from": "settings",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": ""
+   },
+   {
+    "from": "settings",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": ""
+   },
+   {
+    "from": "support",
+    "to": "contact",
+    "testID": "support-contact",
+    "name": "Contact us"
+   },
+   {
+    "from": "display",
+    "to": "font-size",
+    "testID": "display-font",
+    "name": "Font size"
+   },
+   {
+    "from": "privacy",
+    "to": "privacy-policy",
+    "testID": "privacy-policy",
+    "name": "Privacy policy"
+   }
+  ]
+ },
+ "after": {
+  "condition": "B",
+  "screens": [
+   {
+    "id": "home",
+    "title": "CityRide",
+    "depth": 0,
+    "byName": true
+   },
+   {
+    "id": "search",
+    "title": "Search",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "journey",
+    "title": "Plan a journey",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "alerts",
+    "title": "Service alerts",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "tickets",
+    "title": "Tickets",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "profile",
+    "title": "Profile",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "settings",
+    "title": "Settings",
+    "depth": 1,
+    "byName": true
+   },
+   {
+    "id": "ticket-type",
+    "title": "Ticket type",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "ticket-history",
+    "title": "Ticket history",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "support",
+    "title": "Help",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "edit-profile",
+    "title": "Edit profile",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "logout",
+    "title": "Log out?",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "notifications",
+    "title": "Notifications",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "display",
+    "title": "Display",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "language",
+    "title": "Language",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "privacy",
+    "title": "Privacy",
+    "depth": 2,
+    "byName": true
+   },
+   {
+    "id": "contact",
+    "title": "Contact us",
+    "depth": 3,
+    "byName": true
+   },
+   {
+    "id": "font-size",
+    "title": "Font size",
+    "depth": 3,
+    "byName": true
+   },
+   {
+    "id": "privacy-policy",
+    "title": "Privacy policy",
+    "depth": 3,
+    "byName": true
+   }
+  ],
+  "edges": [
+   {
+    "from": "home",
+    "to": "search",
+    "testID": "home-search",
+    "name": "Search"
+   },
+   {
+    "from": "home",
+    "to": "journey",
+    "testID": "home-plan",
+    "name": "Plan a journey"
+   },
+   {
+    "from": "home",
+    "to": "alerts",
+    "testID": "home-alerts",
+    "name": "Service alerts"
+   },
+   {
+    "from": "home",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": "Ticket"
+   },
+   {
+    "from": "home",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": "Person"
+   },
+   {
+    "from": "home",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": "Gear"
+   },
+   {
+    "from": "tickets",
+    "to": "ticket-type",
+    "testID": "tickets-buy",
+    "name": "Buy a ticket"
+   },
+   {
+    "from": "tickets",
+    "to": "ticket-history",
+    "testID": "tickets-history",
+    "name": "Ticket history"
+   },
+   {
+    "from": "tickets",
+    "to": "home",
+    "testID": "tab-home",
+    "name": "Home"
+   },
+   {
+    "from": "tickets",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": "Person"
+   },
+   {
+    "from": "tickets",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": "Gear"
+   },
+   {
+    "from": "profile",
+    "to": "support",
+    "testID": "profile-help",
+    "name": "Help"
+   },
+   {
+    "from": "profile",
+    "to": "edit-profile",
+    "testID": "profile-edit",
+    "name": "Edit"
+   },
+   {
+    "from": "profile",
+    "to": "logout",
+    "testID": "profile-logout",
+    "name": "Log out"
+   },
+   {
+    "from": "profile",
+    "to": "home",
+    "testID": "tab-home",
+    "name": "Home"
+   },
+   {
+    "from": "profile",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": "Ticket"
+   },
+   {
+    "from": "profile",
+    "to": "settings",
+    "testID": "tab-settings",
+    "name": "Gear"
+   },
+   {
+    "from": "settings",
+    "to": "notifications",
+    "testID": "settings-notifications",
+    "name": "Notifications"
+   },
+   {
+    "from": "settings",
+    "to": "display",
+    "testID": "settings-display",
+    "name": "Display"
+   },
+   {
+    "from": "settings",
+    "to": "language",
+    "testID": "settings-language",
+    "name": "Language"
+   },
+   {
+    "from": "settings",
+    "to": "privacy",
+    "testID": "settings-privacy",
+    "name": "Privacy"
+   },
+   {
+    "from": "settings",
+    "to": "home",
+    "testID": "tab-home",
+    "name": "Home"
+   },
+   {
+    "from": "settings",
+    "to": "tickets",
+    "testID": "tab-tickets",
+    "name": "Ticket"
+   },
+   {
+    "from": "settings",
+    "to": "profile",
+    "testID": "tab-profile",
+    "name": "Person"
+   },
+   {
+    "from": "support",
+    "to": "contact",
+    "testID": "support-contact",
+    "name": "Contact us"
+   },
+   {
+    "from": "display",
+    "to": "font-size",
+    "testID": "display-font",
+    "name": "Font size"
+   },
+   {
+    "from": "privacy",
+    "to": "privacy-policy",
+    "testID": "privacy-policy",
+    "name": "Privacy policy"
+   }
+  ]
+ }
+}

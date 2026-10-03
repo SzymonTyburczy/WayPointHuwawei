@@ -23,6 +23,14 @@ numbered list.
   fixes.
 - **Autofix.** `waypoint-fix` writes accepted labels into the source next to the
   matching `testID`. [docs/AUTOFIX.md](docs/AUTOFIX.md)
+- **Hear it like a screen reader.** The core lists every stop a screen reader makes and
+  what it says ("Tab, selected. Tab. Tab."). The audit panel's Listen button speaks it;
+  the voice command "read everything" / „przeczytaj wszystko” reads it out.
+- **Focus order rule R8** (WCAG 2.4.3): warns when the reader jumps up, or left in a row.
+- **Where can an assistant go?** A crawler presses every control of the simulated app
+  and maps the screens. Before the fixes an assistant reaches 3 of 19 screens by name;
+  after them, 19 of 19. The report draws both maps and simulates colour-vision
+  deficiencies on every screen.
 
 Design: [RFC-001](docs/rfc/RFC-001-waypoint.md) · Plan: [IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) ·
 Architecture: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · AI: [AI_FEATURES.md](docs/AI_FEATURES.md),

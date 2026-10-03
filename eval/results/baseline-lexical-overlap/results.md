@@ -1,6 +1,6 @@
 # Waypoint evaluation results
 
-Generated 2026-10-03T20:30:26.372Z by `eval/src/cli.ts`. Raw logs sit next to this file.
+Generated 2026-10-03T20:44:41.681Z by `eval/src/cli.ts`. Raw logs sit next to this file.
 
 | Setting | Value |
 | --- | --- |
@@ -8,7 +8,7 @@ Generated 2026-10-03T20:30:26.372Z by `eval/src/cli.ts`. Raw logs sit next to th
 | Temperature / seed | 0 / 0 |
 | Step limit | 8 |
 | App | simulated demo app (`eval/src/simulator.ts`), host |
-| Commit | d139a42 |
+| Commit | 697dafd |
 
 > **This run uses the lexical baseline, not a language model.** It shows that the harness works and gives a
 > floor. Numbers about Waypoint's guide come from a run against `llama-server` (see eval/README.md).

@@ -25,6 +25,7 @@ are ignored.
 | next | next, done, continue | dalej, gotowe, zrobione | repeats the current step; with no guide running, restarts the last goal |
 | back | back, go back | wróć, cofnij | a reminder to use the back gesture (the guide never acts for you) |
 | stop | stop, cancel | stop, przestań, zatrzymaj, anuluj | stops the guide |
+| read everything | read everything, read all | przeczytaj wszystko | the screen-reader transcript, up to 15 stops |
 | audit | check accessibility, audit | sprawdź dostępność, audyt | the screen's score (0–100) with error and warning counts |
 | help | help, what can you do | pomoc, co umiesz | the list above |
 

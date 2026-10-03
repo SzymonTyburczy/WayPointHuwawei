@@ -2,12 +2,16 @@
 // snapshot's real frames and colours, with every finding boxed and labelled,
 // before (condition A) and after accepting Waypoint's label suggestions (B).
 import type { AuditReport, Finding, Rgba, Snapshot, UiNode } from '../../packages/waypoint-sdk/src/types';
+import type { AppMap } from './crawl';
 
 export interface ScreenAudit {
   id: string;
   title: string;
   before: { snapshot: Snapshot; report: AuditReport };
   after: { snapshot: Snapshot; report: AuditReport };
+  /** What a screen reader says, stop by stop. */
+  speechBefore: string[];
+  speechAfter: string[];
 }
 
 export interface ReportMeta {
@@ -24,6 +28,7 @@ const WCAG: Record<string, { sc: string; name: string; title: string }> = {
   R4: { sc: '4.1.2', name: 'Name, Role, Value', title: 'Missing role' },
   R5: { sc: '2.4.6', name: 'Headings and Labels', title: 'Duplicate name' },
   R6: { sc: '1.1.1', name: 'Non-text Content', title: 'Unnamed image' },
+  R8: { sc: '2.4.3', name: 'Focus Order', title: 'Focus order' },
 };
 
 function esc(s: unknown): string {
@@ -112,6 +117,8 @@ function detail(f: Finding): string {
       return `${d.ratio}:1 (needs ${d.threshold}:1) · ${d.fg} on ${d.bg}`;
     case 'R5':
       return `“${esc(d.name)}”`;
+    case 'R8':
+      return `jumps ${esc(d.direction)} after “${esc(d.from)}”`;
     default:
       return d.imageSrc ? `icon ${esc(d.imageSrc)}` : '';
   }
@@ -128,13 +135,59 @@ function findingRows(snap: Snapshot, report: AuditReport): string {
   return `<div class="table"><table><thead><tr><th>Rule</th><th>Problem</th><th>Element</th><th>Measured</th><th>Suggested fix</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
 }
 
+/** Screens as boxes in columns by depth; edges are the controls between them. */
+export function appMapSvg(map: AppMap, label: string): string {
+  const colW = 200;
+  const rowH = 40;
+  const boxW = 150;
+  const boxH = 28;
+  const cols = new Map<number, string[]>();
+  for (const s of [...map.screens].sort((a, b) => a.depth - b.depth)) cols.set(s.depth, [...(cols.get(s.depth) ?? []), s.id]);
+  // Order each column by the position of the parent that first reaches it.
+  const pos = new Map<string, { x: number; y: number }>();
+  const maxRows = Math.max(...[...cols.values()].map((c) => c.length));
+  for (const [d, ids] of [...cols.entries()].sort((a, b) => a[0] - b[0])) {
+    const parentY = (id: string) => {
+      const ys = map.edges.filter((e) => e.to === id && pos.has(e.from)).map((e) => pos.get(e.from)!.y);
+      return ys.length ? Math.min(...ys) : 0;
+    };
+    ids.sort((a, b) => parentY(a) - parentY(b));
+    const offset = ((maxRows - ids.length) * rowH) / 2;
+    ids.forEach((id, i) => pos.set(id, { x: 8 + d * colW, y: 8 + offset + i * rowH }));
+  }
+  const width = 8 + cols.size * colW;
+  const height = 16 + maxRows * rowH;
+  const byId = new Map(map.screens.map((s) => [s.id, s]));
+  const edges = map.edges
+    .filter((e) => byId.get(e.to)!.depth === byId.get(e.from)!.depth + 1)
+    .map((e) => {
+      const a = pos.get(e.from)!;
+      const b = pos.get(e.to)!;
+      const x1 = a.x + boxW;
+      const y1 = a.y + boxH / 2;
+      const x2 = b.x;
+      const y2 = b.y + boxH / 2;
+      const mx = (x1 + x2) / 2;
+      return `<path class="map-edge ${e.name ? 'named' : 'unnamed'}" d="M${x1} ${y1} C${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}"><title>${esc(e.testID)}: ${e.name ? `“${esc(e.name)}”` : 'no name'}</title></path>`;
+    })
+    .join('');
+  const nodes = map.screens
+    .map((s) => {
+      const p = pos.get(s.id)!;
+      const t = s.title.length > 18 ? `${s.title.slice(0, 17)}…` : s.title;
+      return `<g class="map-node ${s.byName ? 'reach' : 'lost'}"><rect x="${p.x}" y="${p.y}" width="${boxW}" height="${boxH}" rx="6"/><text x="${p.x + 10}" y="${p.y + 18}">${esc(t)}</text></g>`;
+    })
+    .join('');
+  return `<svg class="map" viewBox="0 0 ${width} ${height}" width="${width}" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">${edges}${nodes}</svg>`;
+}
+
 function grade(score: number | undefined): string {
   const s = score ?? 0;
   const g = s >= 90 ? 'A' : s >= 80 ? 'B' : s >= 70 ? 'C' : s >= 60 ? 'D' : 'F';
   return `<span class="grade g${g}" title="Score ${s} of 100">${s}<small>${g}</small></span>`;
 }
 
-export function renderHtmlReport(meta: ReportMeta, screens: ScreenAudit[]): string {
+export function renderHtmlReport(meta: ReportMeta, screens: ScreenAudit[], maps?: { before: AppMap; after: AppMap }): string {
   const avg = (k: 'before' | 'after') => Math.round(screens.reduce((a, s) => a + (s[k].report.score?.score ?? 0), 0) / screens.length);
   const total = (k: 'before' | 'after') => screens.reduce((a, s) => a + s[k].report.findings.length, 0);
   const distinct = (k: 'before' | 'after') => screens.reduce((a, s) => a + (s[k].report.score?.distinct ?? 0), 0);
@@ -159,13 +212,32 @@ export function renderHtmlReport(meta: ReportMeta, screens: ScreenAudit[]): stri
     <div class="pair">
       <figure>${wireframe(s.before.snapshot, s.before.report, `${s.title}, defective`)}<figcaption>Before · ${s.before.report.findings.length} findings</figcaption></figure>
       <figure>${wireframe(s.after.snapshot, s.after.report, `${s.title}, after accepting suggestions`)}<figcaption>After · ${s.after.report.findings.length} findings</figcaption></figure>
-      <div class="detail">${findingRows(s.before.snapshot, s.before.report)}</div>
+      <div class="detail">${findingRows(s.before.snapshot, s.before.report)}
+        <details class="speech"><summary>What a screen reader says</summary>
+          <div class="speech-cols">
+            <div><h3>Before</h3><ol>${s.speechBefore.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div>
+            <div><h3>After</h3><ol>${s.speechAfter.map((t) => `<li>${esc(t)}</li>`).join('')}</ol></div>
+          </div>
+        </details>
+      </div>
     </div>
   </section>`,
     )
     .join('\n');
 
-  const ruleRows = ['R1', 'R2', 'R3', 'R4', 'R5', 'R6']
+  const reach = (m: AppMap) => m.screens.filter((s) => s.byName).length;
+  const mapSection = maps
+    ? `
+  <section class="panel map-panel" id="app-map">
+    <h2>Where an assistant can go</h2>
+    <p class="lede">Every screen and every control between screens, found by pressing each control. Solid green boxes can be reached from Home using only named controls, which is what a voice assistant or a screen-reader user needs. Red dashed lines are controls without a name.</p>
+    <div class="map-pair">
+      <figure><div class="map-scroll">${appMapSvg(maps.before, 'App map before fixes')}</div><figcaption>Before · ${reach(maps.before)} of ${maps.before.screens.length} screens reachable by name</figcaption></figure>
+      <figure><div class="map-scroll">${appMapSvg(maps.after, 'App map after fixes')}</div><figcaption>After · ${reach(maps.after)} of ${maps.after.screens.length} screens reachable by name</figcaption></figure>
+    </div>
+  </section>`
+    : '';
+  const ruleRows = ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R8']
     .map((r) => `<tr><td><span class="rule">${r}</span></td><td>${WCAG[r].title}</td><td>WCAG ${WCAG[r].sc} ${WCAG[r].name}</td><td class="num">${rb[r] ?? 0}</td><td class="num">${ra[r] ?? 0}</td></tr>`)
     .join('');
 
@@ -177,16 +249,16 @@ export function renderHtmlReport(meta: ReportMeta, screens: ScreenAudit[]): stri
 /* Layout: summary band, then one row per screen (before / after wireframes + findings), worst screen first. */
 :root {
   --bg: #F3F5F8; --surface: #FFFFFF; --ink: #16202B; --muted: #536170; --line: #D5DCE4;
-  --accent: #0B5FA5; --error: #B3261E; --warn: #8A5300; --ok: #1B6E3A;
+  --accent: #0B5FA5; --error: #B3261E; --warn: #8A5300; --ok: #1B6E3A; --ok-bg: #E3F2E8;
   --font-body: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-data: "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0F151C; --surface: #17202A; --ink: #E7EDF3; --muted: #9AA8B6; --line: #2A3643;
-  --accent: #6CB4F0; --error: #FF8A80; --warn: #F2B85B; --ok: #7BD49A; color-scheme: dark } }
+  --accent: #6CB4F0; --error: #FF8A80; --warn: #F2B85B; --ok: #7BD49A; --ok-bg: #173826; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0F151C; --surface: #17202A; --ink: #E7EDF3; --muted: #9AA8B6; --line: #2A3643;
-  --accent: #6CB4F0; --error: #FF8A80; --warn: #F2B85B; --ok: #7BD49A; color-scheme: dark }
+  --accent: #6CB4F0; --error: #FF8A80; --warn: #F2B85B; --ok: #7BD49A; --ok-bg: #173826; color-scheme: dark }
 body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font-body); }
 .wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px; display: grid; gap: 28px; }
 h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; font-weight: 800; margin: 0; text-wrap: balance; }
@@ -227,6 +299,30 @@ figcaption { font: 13px/1.3 var(--font-data); color: var(--muted); text-align: c
 .detail { min-width: 0; }
 .none { color: var(--ok); margin: 0; }
 body.hide-findings .finding { display: none; }
+body[data-vision="protanopia"] .wire { filter: url(#cv-protanopia); }
+body[data-vision="deuteranopia"] .wire { filter: url(#cv-deuteranopia); }
+body[data-vision="tritanopia"] .wire { filter: url(#cv-tritanopia); }
+body[data-vision="achromatopsia"] .wire { filter: url(#cv-achromatopsia); }
+.controls select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; }
+.controls select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.map-panel { display: grid; gap: 10px; }
+.map-pair { display: grid; gap: 16px; }
+.map-scroll { overflow-x: auto; }
+.map { display: block; height: auto; max-width: none; }
+.map-node rect { stroke-width: 1.5; }
+.map-node text { font: 12px var(--font-body); fill: var(--ink); }
+.map-node.reach rect { fill: var(--ok-bg); stroke: var(--ok); }
+.map-node.lost rect { fill: var(--surface); stroke: var(--muted); stroke-dasharray: 4 3; }
+.map-node.lost text { fill: var(--muted); }
+.map-edge { fill: none; stroke-width: 1.5; }
+.map-edge.named { stroke: var(--ok); }
+.map-edge.unnamed { stroke: var(--error); stroke-dasharray: 5 4; }
+.speech { margin-top: 12px; }
+.speech summary { cursor: pointer; font-weight: 700; }
+.speech summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.speech-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.speech h3 { font: 700 12px/1.2 var(--font-data); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 8px 0 4px; }
+.speech ol { margin: 0; padding-left: 22px; font: 13px/1.5 var(--font-data); }
 footer { color: var(--muted); font-size: 13px; }
 @media (max-width: 760px) { .pair { grid-template-columns: 1fr 1fr; } .detail { grid-column: 1 / -1; } }
 @media (prefers-reduced-motion: no-preference) { .finding { transition: opacity .2s; } }
@@ -241,17 +337,38 @@ footer { color: var(--muted); font-size: 13px; }
     <div class="stat"><b>${avg('before')}<span class="to">→</span>${avg('after')}</b><span>Average score out of 100</span></div>
     <div class="stat"><b>${total('before')}<span class="to">→</span>${total('after')}</b><span>Findings, counted per screen (the tab bar repeats on four)</span></div>
     <div class="stat"><b>${distinct('before')}<span class="to">→</span>${distinct('after')}</b><span>Of ${actionable} controls, how many an assistant can tell apart</span></div>
+    ${maps ? `<div class="stat"><b>${reach(maps.before)}<span class="to">→</span>${reach(maps.after)}</b><span>Of ${maps.before.screens.length} screens, how many an assistant can reach by name</span></div>` : ''}
   </div>
   <div class="panel">
     <div class="table"><table><thead><tr><th>Rule</th><th>Problem</th><th>Success criterion</th><th>Before</th><th>After</th></tr></thead><tbody>${ruleRows}</tbody></table></div>
   </div>
-  <div class="controls"><label for="toggle-findings"><input type="checkbox" id="toggle-findings" checked> Show finding boxes</label><span>Dashed outline: a control with no findings. Hatched: an image.</span></div>
+  ${mapSection}
+  <div class="controls">
+    <label for="toggle-findings"><input type="checkbox" id="toggle-findings" checked> Show finding boxes</label>
+    <label for="vision">Colour vision <select id="vision">
+      <option value="">Typical</option>
+      <option value="protanopia">Protanopia (no red cones)</option>
+      <option value="deuteranopia">Deuteranopia (no green cones)</option>
+      <option value="tritanopia">Tritanopia (no blue cones)</option>
+      <option value="achromatopsia">Achromatopsia (no colour)</option>
+    </select></label>
+    <span>Dashed outline: a control with no findings. Hatched: an image. Colour vision is an approximate simulation of the screens.</span>
+  </div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="cv-protanopia"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0 0.558 0.442 0 0 0 0 0.242 0.758 0 0 0 0 0 1 0"/></filter>
+    <filter id="cv-deuteranopia"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0"/></filter>
+    <filter id="cv-tritanopia"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0 0 0.433 0.567 0 0 0 0.475 0.525 0 0 0 0 0 1 0"/></filter>
+    <filter id="cv-achromatopsia"><feColorMatrix type="matrix" values="0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0.299 0.587 0.114 0 0 0 0 0 1 0"/></filter>
+  </svg>
   ${cards}
   <footer>Generated by <code>eval/src/cli.ts report</code>${meta.commit ? ` at commit <code>${esc(meta.commit)}</code>` : ''}. Rules and thresholds: docs/ARCHITECTURE.md. Scores weigh names 40, targets 20, contrast 20, roles 10, images 10.</footer>
 </div>
 <script>
   document.getElementById('toggle-findings').addEventListener('change', function (e) {
     document.body.classList.toggle('hide-findings', !e.target.checked);
+  });
+  document.getElementById('vision').addEventListener('change', function (e) {
+    document.body.dataset.vision = e.target.value;
   });
 </script>
 `;
