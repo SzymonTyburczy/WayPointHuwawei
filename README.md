@@ -27,6 +27,14 @@ numbered list.
   what it says ("Tab, selected. Tab. Tab."). The audit panel's Listen button speaks it;
   the voice command "read everything" / „przeczytaj wszystko” reads it out.
 - **Focus order rule R8** (WCAG 2.4.3): warns when the reader jumps up, or left in a row.
+- **Playground in the browser.** The C++ core compiled to WebAssembly (Zig, ~210 KB)
+  runs in one self-contained page: name the demo app's controls and watch the score,
+  the screen-reader transcript, the model's prompt and the reachable screens change.
+  A parity test checks that the browser build answers byte for byte like the native
+  core. `cpp/wasm/build.sh && (cd eval && npm run playground)`
+- **Accessibility gate for CI.** `npm run gate` (in `eval/`) audits every screen against a
+  committed baseline and fails on a lower score or a new finding, with a table in the
+  GitHub job summary. It also takes snapshots pulled from a device (`--snapshots dir/`).
 - **Where can an assistant go?** A crawler presses every control of the simulated app
   and maps the screens. Before the fixes an assistant reaches 3 of 19 screens by name;
   after them, 19 of 19. The report draws both maps and simulates colour-vision

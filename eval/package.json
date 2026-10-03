@@ -10,7 +10,9 @@
     "golden": "tsx src/cli.ts golden",
     "all": "tsx src/cli.ts all",
     "voice-demo": "tsx src/voiceDemo.ts",
-    "report": "tsx src/cli.ts report"
+    "report": "tsx src/cli.ts report",
+    "playground": "tsx src/playground.ts",
+    "gate": "tsx src/gate.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

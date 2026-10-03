@@ -65,6 +65,18 @@ jobs:
           npm run all -- --backend lexical --out results/ci-lexical
           npm run voice-demo
           npm run report -- --out results/ci-lexical/report.html
+      - name: Accessibility gate (demo app against eval/a11y-baseline.json)
+        working-directory: eval
+        run: npm run gate -- --demo A --baseline a11y-baseline.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: WebAssembly core and playground
+        run: |
+          pip install ziglang==0.16.0
+          cpp/wasm/build.sh
+          node --test playground/core.test.cjs
+          (cd eval && npm run playground -- results/ci-lexical/playground.html)
       - name: Golden snapshots are up to date
         working-directory: eval
         run: |

@@ -3,6 +3,9 @@
 #include <exception>
 
 #include "waypoint/announce.hpp"
+#include "waypoint/color.hpp"
+#include "waypoint/raw_tree.hpp"
+#include "waypoint/walker.hpp"
 #include "waypoint/finalize.hpp"
 #include "waypoint/json.hpp"
 #include "waypoint/labels.hpp"
@@ -110,6 +113,41 @@ std::string parseLabelReply(const std::string& text) {
     Json j = Json::object();
     j.set("label", *label);
     return j.dump();
+  });
+}
+
+std::string dispatch(const std::string& cmd, const std::string& requestJson) {
+  return guarded([&]() -> std::string {
+    const Json req = Json::parse(requestJson);
+    const std::string snapshot = req["snapshot"].dump();
+    if (cmd == "finalize") return finalize(snapshot);
+    if (cmd == "audit") return audit(snapshot);
+    if (cmd == "plan") {
+      const Json* h = req.get("history");
+      return planStep(req.str("goal"), snapshot, h ? h->dump() : "");
+    }
+    if (cmd == "parse") return parseAction(req.str("text"), req["candidates"].dump());
+    if (cmd == "label-request") return labelRequest(snapshot, static_cast<int64_t>(req.num("nodeId")));
+    if (cmd == "validate-label") return validateLabel(snapshot, static_cast<int64_t>(req.num("nodeId")), req.str("label"));
+    if (cmd == "parse-label") return parseLabelReply(req.str("text"));
+    if (cmd == "announce") return announce(snapshot);
+    if (cmd == "walk") {
+      const Json* root = req.get("root");
+      if (!root) return errorJson("missing root");
+      Rect viewport{0, 0, 360, 780};
+      if (const Json* v = req.get("viewport")) viewport = rectFromJson(*v);
+      Snapshot s = walkTree(RawAdapter{}, rawNodeFromJson(*root), viewport, static_cast<int64_t>(req.num("surfaceId", 1)));
+      waypoint::finalize(s);
+      return toJson(s).dump();
+    }
+    if (cmd == "contrast") {
+      auto fg = parseHexColor(req.str("fg")), bg = parseHexColor(req.str("bg"));
+      if (!fg || !bg) return errorJson("fg and bg must be hex colours");
+      Json out = Json::object();
+      out.set("ratio", contrastRatio(compositeOver(*fg, *bg), *bg));
+      return out.dump();
+    }
+    return errorJson("unknown command: " + cmd);
   });
 }
 

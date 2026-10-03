@@ -25,4 +25,13 @@ std::string announce(const std::string& snapshotJson);
 // {"label":"..."} reply -> {label} or {error}
 std::string parseLabelReply(const std::string& text);
 
+// One entry point for every command, taking the request as one JSON object. Used
+// by waypoint-cli and the WebAssembly build. Commands and their request fields:
+//   finalize {snapshot} · audit {snapshot} · plan {goal, snapshot, history?}
+//   parse {text, candidates} · label-request {snapshot, nodeId}
+//   validate-label {snapshot, nodeId, label} · parse-label {text} · announce {snapshot}
+//   walk {root, viewport?, surfaceId?} · contrast {fg, bg}
+// Unknown commands and bad requests return {"error": ...}.
+std::string dispatch(const std::string& cmd, const std::string& requestJson);
+
 }  // namespace waypoint::api

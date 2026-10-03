@@ -25,12 +25,7 @@
 #include <string>
 
 #include "waypoint/api.hpp"
-#include "waypoint/color.hpp"
-#include "waypoint/finalize.hpp"
 #include "waypoint/json.hpp"
-#include "waypoint/model.hpp"
-#include "waypoint/raw_tree.hpp"
-#include "waypoint/walker.hpp"
 
 using namespace waypoint;
 
@@ -78,46 +73,7 @@ int main(int argc, char** argv) {
     return emit(err.dump());
   }
 
-  const std::string snapshot = req["snapshot"].dump();
-  if (cmd == "finalize") return emit(api::finalize(snapshot));
-  if (cmd == "audit") return emit(api::audit(snapshot));
-  if (cmd == "plan") {
-    const Json* h = req.get("history");
-    return emit(api::planStep(req.str("goal"), snapshot, h ? h->dump() : ""));
-  }
-  if (cmd == "parse") return emit(api::parseAction(req.str("text"), req["candidates"].dump()));
-  if (cmd == "label-request") return emit(api::labelRequest(snapshot, static_cast<int64_t>(req.num("nodeId"))));
-  if (cmd == "validate-label") {
-    return emit(api::validateLabel(snapshot, static_cast<int64_t>(req.num("nodeId")), req.str("label")));
-  }
-  if (cmd == "parse-label") return emit(api::parseLabelReply(req.str("text")));
-  if (cmd == "announce") return emit(api::announce(snapshot));
-  if (cmd == "walk") {
-    try {
-      const Json* root = req.get("root");
-      if (!root) throw JsonError("missing root");
-      Rect viewport{0, 0, 360, 780};
-      if (const Json* v = req.get("viewport")) viewport = rectFromJson(*v);
-      Snapshot s = walkTree(RawAdapter{}, rawNodeFromJson(*root), viewport,
-                            static_cast<int64_t>(req.num("surfaceId", 1)));
-      finalize(s);
-      return emit(toJson(s).dump());
-    } catch (const std::exception& e) {
-      Json err = Json::object();
-      err.set("error", e.what());
-      return emit(err.dump());
-    }
-  }
-  if (cmd == "contrast") {
-    auto fg = parseHexColor(req.str("fg")), bg = parseHexColor(req.str("bg"));
-    Json out = Json::object();
-    if (!fg || !bg) {
-      out.set("error", "fg and bg must be hex colours");
-    } else {
-      Rgba effFg = compositeOver(*fg, *bg);
-      out.set("ratio", contrastRatio(effFg, *bg));
-    }
-    return emit(out.dump());
-  }
-  return usage();
+  const std::string out = api::dispatch(cmd, req.dump());
+  if (out.rfind("{\"error\":\"unknown command", 0) == 0) return usage();
+  return emit(out);
 }

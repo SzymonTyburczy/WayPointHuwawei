@@ -53,6 +53,25 @@ npm run audit -- --backend none    # M2 and fallback-only M3
    The model's own `done` is ignored. The autopilot presses exactly what the
    guide highlighted; it lives here and in the demo app, never in the SDK.
 
+## Accessibility gate
+
+```sh
+npm run gate -- --demo A --baseline a11y-baseline.json            # CI: fails on regressions
+npm run gate -- --snapshots ../device-snapshots --baseline b.json  # snapshots from a device
+npm run gate -- --demo A --baseline a11y-baseline.json --update   # accept the current state
+```
+
+A regression is a lower score on any screen or a finding (rule + testID) that the
+baseline does not have. The Markdown summary is printed and, on GitHub Actions,
+added to the job summary.
+
+## Playground
+
+`../cpp/wasm/build.sh && npm run playground` writes `results/playground.html`: the
+core as WebAssembly plus every demo screen, in one file that works offline.
+`node --test ../playground/core.test.cjs` checks that the WebAssembly build answers
+exactly like the native CLI on every golden snapshot.
+
 ## Golden snapshots
 
 `npm run golden` re-renders every screen in A and C into

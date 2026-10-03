@@ -1,0 +1,123 @@
+{
+  "screens": {
+    "home": {
+      "score": 71,
+      "findings": [
+        "R1 home-search",
+        "R1 tab-home",
+        "R1 tab-profile",
+        "R1 tab-settings",
+        "R1 tab-tickets",
+        "R2 home-banner-close",
+        "R6 home-banner"
+      ]
+    },
+    "tickets": {
+      "score": 68,
+      "findings": [
+        "R1 tab-home",
+        "R1 tab-profile",
+        "R1 tab-settings",
+        "R1 tab-tickets",
+        "R3 tickets-validity"
+      ]
+    },
+    "ticket-type": {
+      "score": 96,
+      "findings": [
+        "R2 ticket-info"
+      ]
+    },
+    "ticket-history": {
+      "score": 95,
+      "findings": [
+        "R3 history-updated"
+      ]
+    },
+    "profile": {
+      "score": 69,
+      "findings": [
+        "R1 profile-edit",
+        "R1 profile-help",
+        "R1 tab-home",
+        "R1 tab-profile",
+        "R1 tab-settings",
+        "R1 tab-tickets",
+        "R5 profile-details-2"
+      ]
+    },
+    "edit-profile": {
+      "score": 88,
+      "findings": [
+        "R1 edit-phone",
+        "R4 edit-save"
+      ]
+    },
+    "support": {
+      "score": 100,
+      "findings": []
+    },
+    "contact": {
+      "score": 100,
+      "findings": []
+    },
+    "logout": {
+      "score": 100,
+      "findings": []
+    },
+    "settings": {
+      "score": 79,
+      "findings": [
+        "R1 tab-home",
+        "R1 tab-profile",
+        "R1 tab-settings",
+        "R1 tab-tickets",
+        "R4 settings-language"
+      ]
+    },
+    "display": {
+      "score": 97,
+      "findings": [
+        "R2 display-dark-mode"
+      ]
+    },
+    "font-size": {
+      "score": 96,
+      "findings": [
+        "R3 fontsize-preview"
+      ]
+    },
+    "notifications": {
+      "score": 93,
+      "findings": [
+        "R2 notif-email"
+      ]
+    },
+    "language": {
+      "score": 100,
+      "findings": []
+    },
+    "privacy": {
+      "score": 95,
+      "findings": [
+        "R3 privacy-footer"
+      ]
+    },
+    "privacy-policy": {
+      "score": 100,
+      "findings": []
+    },
+    "search": {
+      "score": 100,
+      "findings": []
+    },
+    "journey": {
+      "score": 100,
+      "findings": []
+    },
+    "alerts": {
+      "score": 100,
+      "findings": []
+    }
+  }
+}

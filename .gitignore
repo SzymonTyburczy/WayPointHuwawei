@@ -10,3 +10,5 @@ eval/results/raw/
 oh_modules/
 .hvigor/
 local.properties
+
+cpp/build-wasm/
