@@ -1,0 +1,227 @@
+<title>CityRide with Waypoint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible+Next:wght@400;600;800&display=swap">
+<style>
+  /* Layout: a phone on a wayfinding board; the panel beside it reads the same screen three ways
+     (audit, screen reader, model). Stacks to one column on narrow screens. */
+  :root {
+    --ground: #e9edf3;
+    --panel: #ffffff;
+    --ink: #0f1b2d;
+    --muted: #4b5567;
+    --line: #d2d9e4;
+    --signal: #f5c400;
+    --on-signal: #0f1b2d;
+    --bezel: #0f1b2d;
+    --bad: #b3261e;
+    --warn: #8a5a00;
+    --ok: #1e6b3a;
+    --code: #f3f5f9;
+    --font-ui: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0b1320; --panel: #121c2c; --ink: #e8edf5; --muted: #a3aec2; --line: #26344c;
+      --signal: #ffd23f; --on-signal: #0f1b2d; --bezel: #000000; --bad: #ff8a80; --warn: #ffc86b; --ok: #7bd69b;
+      --code: #0d1626; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0b1320; --panel: #121c2c; --ink: #e8edf5; --muted: #a3aec2; --line: #26344c;
+    --signal: #ffd23f; --on-signal: #0f1b2d; --bezel: #000000; --bad: #ff8a80; --warn: #ffc86b; --ok: #7bd69b;
+    --code: #0d1626; color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { background: var(--ground); color: var(--ink); font: 16px/1.5 var(--font-ui); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 20px; }
+  header.board { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .sign { display: inline-flex; align-items: center; gap: 10px; background: var(--signal); color: var(--on-signal);
+    font-weight: 800; letter-spacing: .02em; padding: 4px 12px 4px 8px; border-radius: 6px; font-size: 15px; }
+  .sign svg { width: 18px; height: 18px; }
+  h1 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.15; font-weight: 800; text-wrap: balance; }
+  .lede { margin: 0; color: var(--muted); max-width: 70ch; flex-basis: 100%; }
+  main.layout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 880px) { main.layout { grid-template-columns: minmax(0, 1fr); } }
+
+  /* phone */
+  #wp-stage { display: grid; justify-items: center; gap: 10px; min-width: 0; }
+  .bezel { background: var(--bezel); padding: 12px; border-radius: 34px; box-shadow: 0 18px 40px rgb(15 27 45 / .25); }
+  #wp-phone { position: relative; overflow: hidden; border-radius: 22px; background: #fff; }
+  #wp-screen { position: absolute; left: 0; top: 0; width: 360px; height: 780px; transform-origin: 0 0; overflow: hidden; background: #fff; color: #111; }
+  #wp-app { position: absolute; inset: 0; display: flex; flex-direction: column; }
+  #wp-hl { position: absolute; z-index: 10; pointer-events: none; outline: 3px solid var(--signal);
+    box-shadow: 0 0 0 9999px rgb(15 27 45 / .35); border-radius: 4px; }
+  #wp-status { color: var(--muted); font-size: 14px; margin: 0; }
+  .hint { color: var(--muted); font-size: 14px; margin: 0; text-align: center; max-width: 40ch; }
+
+  /* panel */
+  .panel { display: grid; gap: 16px; min-width: 0; }
+  section.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+  section.card h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1080px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+  ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+  ol.steps b { font-weight: 600; }
+  kbd { font: 600 13px var(--font-mono); background: var(--code); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 6px; min-width: 0; }
+  legend { font-weight: 600; margin-bottom: 6px; padding: 0; }
+  .controls { display: grid; gap: 14px; }
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
+  .seg label { position: relative; }
+  .seg input { position: absolute; opacity: 0; inset: 0; }
+  .seg span { display: inline-block; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 15px; }
+  .seg input:checked + span { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+  .seg input:focus-visible + span { outline: 3px solid var(--signal); outline-offset: 2px; }
+  .note { color: var(--muted); font-size: 14px; margin: 0; }
+  .counts + .note { margin-top: 10px; }
+  .inline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  input[type="text"], select { font: 15px var(--font-ui); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 10px; min-width: 0; }
+  #wp-llama-url { width: 100%; max-width: 280px; }
+  button { font: 600 15px var(--font-ui); color: var(--ink); background: transparent; border: 1px solid var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+  .score { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  #wp-score { font-size: 56px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .of { color: var(--muted); }
+  #wp-grade { font-weight: 800; font-size: 18px; padding: 2px 10px; border-radius: 6px; border: 2px solid currentColor; }
+  #wp-grade[data-grade="A"], #wp-grade[data-grade="B"] { color: var(--ok); }
+  #wp-grade[data-grade="C"] { color: var(--warn); }
+  #wp-grade[data-grade="D"], #wp-grade[data-grade="F"] { color: var(--bad); }
+  .distinct { margin: 8px 0 12px; }
+  ul.counts { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  ul.counts li { display: grid; grid-template-columns: 36px 1fr auto; gap: 8px; padding: 3px 0; border-top: 1px solid var(--line); color: var(--muted); }
+  ul.counts li.hit { color: var(--ink); }
+  ul.counts li.hit .n { color: var(--bad); font-weight: 800; }
+  .rule { font: 600 13px var(--font-mono); padding-top: 2px; }
+  .n { font-variant-numeric: tabular-nums; }
+
+  ol.sr { margin: 0; padding-left: 36px; display: grid; gap: 2px; max-height: 300px; overflow: auto; font-variant-numeric: tabular-nums; }
+  ol.sr li { padding: 2px 6px; border-radius: 4px; cursor: default; }
+  ol.sr li:hover, ol.sr li:focus { background: var(--code); outline: none; }
+  ol.sr li.unnamed { color: var(--bad); font-weight: 600; }
+  ol.sr li.err { color: var(--bad); list-style: none; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+  pre { margin: 0; font: 13px/1.5 var(--font-mono); background: var(--code); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; overflow: auto; max-height: 300px; white-space: pre-wrap; word-break: break-word; }
+  details summary { cursor: pointer; margin-top: 10px; font-weight: 600; }
+  details pre { margin-top: 8px; }
+  label.goal { display: grid; gap: 4px; margin-bottom: 10px; font-weight: 600; }
+  footer { color: var(--muted); font-size: 14px; }
+  footer code, .note code, ol.steps code { font: 13px var(--font-mono); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="board">
+    <span class="sign"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 3 21h4.5L12 11.5 16.5 21H21z"/></svg>Waypoint</span>
+    <h1>CityRide with Waypoint</h1>
+    <p class="lede">A transit app with 20 accessibility defects, and Waypoint running beside it. Everything runs in this page:
+      the Waypoint core as WebAssembly, the React Native screens through react-native-web. Tap the phone the way you would on a device.</p>
+  </header>
+
+  <main class="layout">
+    <div id="wp-stage">
+      <div class="bezel">
+        <div id="wp-phone">
+          <div id="wp-screen">
+            <div id="wp-app"></div>
+            <div id="wp-hl" hidden></div>
+          </div>
+        </div>
+      </div>
+      <p id="wp-status">Loading the Waypoint core…</p>
+      <p class="hint"><b>Guide</b> asks for a goal, <b>A11y</b> runs the audit, the green microphone takes voice or typed commands.</p>
+    </div>
+
+    <div class="panel">
+      <section class="card" aria-labelledby="try-h">
+        <h2 id="try-h">Try this</h2>
+        <ol class="steps">
+          <li>Press <b>Guide</b> and type <kbd>see my past tickets</kbd>. The guide gives up: the four tabs at the bottom have no names.</li>
+          <li>Press <b>A11y</b>. Every finding gets a box; press <b>Accept all</b> to apply the suggested labels.</li>
+          <li>Ask the guide again. It highlights <b>Ticket</b>, then <b>Ticket history</b>; you do the tapping.
+            The baseline cannot tell when it has arrived and keeps going; a model answers <code>done</code> there.</li>
+          <li>Press the microphone and say or type <kbd>what is here?</kbd>, <kbd>read everything</kbd> or <kbd>co tu jest?</kbd></li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="build-h">
+        <h2 id="build-h">Build</h2>
+        <div class="controls">
+          <fieldset>
+            <legend>Labels in the app</legend>
+            <div class="seg">
+              <label><input type="radio" name="wp-condition" value="A" id="wp-cond-a" checked><span>As shipped, with defects</span></label>
+              <label><input type="radio" name="wp-condition" value="C" id="wp-cond-c"><span>Labelled by hand</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>What picks the guide's next step</legend>
+            <div class="seg">
+              <label><input type="radio" name="wp-brain" value="baseline" id="wp-brain-baseline" checked><span>Keyword baseline</span></label>
+              <label><input type="radio" name="wp-brain" value="llama" id="wp-brain-llama"><span>llama-server</span></label>
+            </div>
+            <input type="text" id="wp-llama-url" value="http://127.0.0.1:8080" disabled aria-label="llama-server address">
+            <p class="note">No language model runs in this page. The baseline taps whatever overlaps the goal's words, so it is the floor, not the result.
+              For a model, run this page locally with <code>npm run web</code> and start <code>llama-server</code>.</p>
+          </fieldset>
+          <fieldset>
+            <legend>Voice commands</legend>
+            <div class="seg">
+              <label><input type="radio" name="wp-voice" value="keyboard" id="wp-voice-keyboard" checked><span>Type them</span></label>
+              <label><input type="radio" name="wp-voice" value="speech" id="wp-voice-speech"><span>Microphone</span></label>
+            </div>
+            <p class="note">The microphone needs a browser with speech recognition, such as Chrome, and this page opened on its own;
+              an embedded page is not allowed to listen.</p>
+          </fieldset>
+          <div class="inline">
+            <label><input type="checkbox" id="wp-speak"> Speak replies</label>
+            <label>Listen in
+              <select id="wp-listen" disabled>
+                <option value="en-US">English</option>
+                <option value="pl-PL">Polish</option>
+              </select>
+            </label>
+            <button type="button" id="wp-reset">Restart app</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="row2">
+        <section class="card" aria-labelledby="score-h">
+          <h2 id="score-h">Audit of this screen</h2>
+          <div class="score"><span id="wp-score">–</span><span class="of">/ 100</span><span id="wp-grade"></span></div>
+          <p class="distinct"><b id="wp-distinct">–</b> controls can be told apart by name.</p>
+          <ul class="counts" id="wp-counts"></ul>
+          <p class="note">On the web Waypoint reads the controls the app registers (plan B), not the native view tree,
+            so icons inside buttons are not counted and a score can differ by a few points from the device.</p>
+        </section>
+
+        <section class="card" aria-labelledby="sr-h">
+          <h2 id="sr-h">What a screen reader says</h2>
+          <p class="sub" id="wp-sr-count"></p>
+          <ol class="sr" id="wp-sr"></ol>
+        </section>
+      </div>
+
+      <section class="card" aria-labelledby="model-h">
+        <h2 id="model-h">What the model sees</h2>
+        <label class="goal" for="wp-goal">Goal
+          <input type="text" id="wp-goal" value="make the text bigger">
+        </label>
+        <p class="sub"><span id="wp-cands"></span>, numbered in reading order. The model may only answer with one of them.</p>
+        <pre id="wp-prompt"></pre>
+        <details>
+          <summary>Grammar for this step (GBNF)</summary>
+          <pre id="wp-grammar"></pre>
+        </details>
+      </section>
+    </div>
+  </main>
+
+  <footer>Source: <code>examples/demo-app/web</code> in the Waypoint repository. Hover a line of the screen-reader list to see the element on the phone.</footer>
+</div>

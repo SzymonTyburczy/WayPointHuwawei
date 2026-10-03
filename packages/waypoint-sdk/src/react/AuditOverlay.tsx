@@ -156,14 +156,17 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
         </View>
       )}
 
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Run accessibility audit"
-        onPress={result && !panel ? () => setPanel(true) : run}
-        style={[styles.fab, fabPosition]}
-      >
-        <Text style={styles.fabText}>{busy ? '…' : 'A11y'}</Text>
-      </Pressable>
+      {/* Hidden while the panel is open: it would cover the panel's own buttons. */}
+      {!(panel && result) && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Run accessibility audit"
+          onPress={result ? () => setPanel(true) : run}
+          style={[styles.fab, fabPosition]}
+        >
+          <Text style={styles.fabText}>{busy ? '…' : 'A11y'}</Text>
+        </Pressable>
+      )}
     </View>
   );
 }

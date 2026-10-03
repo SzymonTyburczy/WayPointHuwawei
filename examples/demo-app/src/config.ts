@@ -28,3 +28,5 @@ export const SPEAK_CAPTIONS = false;
 /** Voice control (docs/VOICE.md): reply language ('auto' follows the speaker) and recognition language. */
 export const VOICE_LANG: 'en' | 'pl' | 'auto' = 'auto';
 export const LISTEN_LANGUAGE = 'en-US';
+/** 'keyboard' types commands instead of speaking them (an emulator without a microphone). */
+export const VOICE_INPUT: 'speech' | 'keyboard' = 'speech';

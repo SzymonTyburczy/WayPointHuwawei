@@ -5,7 +5,7 @@ import { AuditOverlay, GuideBar, VoiceButton, WaypointProvider } from 'waypoint-
 import { canGoBack } from './app/navigation';
 import { NavProvider, useNav } from './app/NavContext';
 import { AppShell } from './components/AppShell';
-import { BACKEND, EVAL_AUTOPILOT, LISTEN_LANGUAGE, SPEAK_CAPTIONS, VOICE_LANG } from './config';
+import { BACKEND, EVAL_AUTOPILOT, LISTEN_LANGUAGE, SPEAK_CAPTIONS, VOICE_INPUT, VOICE_LANG } from './config';
 import { autopilot } from './eval/autopilot';
 import { DeviceEval } from './eval/DeviceEval';
 
@@ -28,7 +28,12 @@ function WaypointShell() {
     >
       <AppShell />
       <GuideLauncher />
-      <VoiceButton lang={VOICE_LANG} listenLanguage={LISTEN_LANGUAGE} position={{ right: 16, bottom: 160 }} />
+      <VoiceButton
+        lang={VOICE_LANG}
+        listenLanguage={LISTEN_LANGUAGE}
+        input={VOICE_INPUT === 'keyboard' ? null : undefined}
+        position={{ right: 16, bottom: 160 }}
+      />
       {__DEV__ && <AuditOverlay fabPosition={{ right: 16, bottom: 88 }} />}
       {EVAL_AUTOPILOT && <DeviceEval />}
     </WaypointProvider>

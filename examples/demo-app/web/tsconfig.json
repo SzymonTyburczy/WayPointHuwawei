@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": { "waypoint-sdk": ["../../packages/waypoint-sdk/src"] },
+    "jsx": "react-jsx",
+    "lib": ["es2020", "dom", "dom.iterable"],
+    "types": []
+  },
+  "include": ["src", "../src"]
+}

@@ -13,6 +13,11 @@ numbered list.
 
 ## Beyond the RFC
 
+- **Runs in a browser, no Huawei hardware needed.** `npm run web` (in `examples/demo-app`)
+  serves CityRide with Waypoint: react-native-web screens, the C++ core as WebAssembly,
+  speech through the Web Speech API, and an inspector that shows the score, the
+  screen-reader transcript and the model's prompt for the current screen.
+  [docs/WEB.md](docs/WEB.md)
 - **Voice control** in English and Polish. Say "make the text bigger" or „co tu jest?”
   and Waypoint speaks each step with the element's position ("at the bottom left"),
   reads what is on the screen and how many controls have no name.
@@ -80,6 +85,16 @@ cmake --build cpp/build && ctest --test-dir cpp/build
 # On-device inference backend (fetches the pinned llama.cpp commit)
 cmake -S cpp -B cpp/build-llm -G Ninja -DCMAKE_BUILD_TYPE=Release -DWAYPOINT_WITH_LLAMA=ON
 cmake --build cpp/build-llm && ctest --test-dir cpp/build-llm
+```
+
+## Run the demo in a browser
+
+No DevEco Studio, emulator or Huawei device needed; see [docs/WEB.md](docs/WEB.md).
+
+```sh
+cpp/wasm/build.sh   # needs zig: pip install ziglang
+(cd packages/waypoint-sdk && npm ci)
+cd examples/demo-app && npm ci && npm run web   # http://127.0.0.1:8081
 ```
 
 ## Build and run the demo on HarmonyOS

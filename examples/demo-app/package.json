@@ -5,11 +5,13 @@
   "description": "Waypoint demo app with seeded accessibility defects (RFC-001 §12)",
   "scripts": {
     "start": "react-native start",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web",
     "icons": "python3 tools/make_icons.py",
     "codegen": "react-native codegen-harmony --cpp-output-path ./harmony/entry/src/main/cpp/generated --rnoh-module-path ./harmony/entry/oh_modules/@rnoh/react-native-openharmony",
     "bundle:harmony": "react-native bundle-harmony --dev false --bundle-output ./harmony/entry/src/main/resources/rawfile/bundle.harmony.js --assets-dest ./harmony/entry/src/main/resources/rawfile/assets",
-    "dev": "react-native bundle-harmony --dev && react-native start"
+    "dev": "react-native bundle-harmony --dev && react-native start",
+    "web": "node web/build.mjs --serve",
+    "web:build": "node web/build.mjs"
   },
   "dependencies": {
     "@react-native-oh/react-native-harmony": "0.77.75",
@@ -26,6 +28,9 @@
     "@react-native/metro-config": "0.77.1",
     "@react-native/typescript-config": "0.77.1",
     "@types/react": "^18.3.12",
+    "esbuild": "^0.28.2",
+    "react-dom": "^18.3.1",
+    "react-native-web": "^0.21.3",
     "typescript": "~5.6.3"
   }
 }
