@@ -1,0 +1,90 @@
+{"condition":"A","task":1,"phrasing":"Make the text bigger","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":1,"phrasing":"I can't read this, the letters are too small","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":1,"phrasing":"Increase the font size","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":2,"phrasing":"Turn off notifications","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":2,"phrasing":"Stop the app from sending me alerts","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"A","task":2,"phrasing":"Disable push messages","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":3,"phrasing":"Change the app language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":3,"phrasing":"Switch the app to Polish","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":3,"phrasing":"I want the app in another language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":4,"phrasing":"Buy a single ticket","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":4,"phrasing":"I need one ride ticket","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":4,"phrasing":"Purchase a ticket for one trip","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":5,"phrasing":"See my past tickets","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":5,"phrasing":"Show the tickets I bought before","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":5,"phrasing":"Where is my ticket history","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":6,"phrasing":"Change my phone number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":6,"phrasing":"Update my mobile number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":6,"phrasing":"My number changed, fix it in my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":7,"phrasing":"Contact support","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":7,"phrasing":"I want to write to customer service","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"A","task":7,"phrasing":"Send a message to the help team","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":8,"phrasing":"Turn on dark mode","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":8,"phrasing":"Make the screen darker at night","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":8,"phrasing":"Switch to the dark theme","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":9,"phrasing":"Log out","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":9,"phrasing":"Sign me out of the app","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":9,"phrasing":"Log off my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":10,"phrasing":"Find the privacy policy","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":10,"phrasing":"How does the app use my data","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"A","task":10,"phrasing":"Show me the privacy rules","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":1,"phrasing":"Make the text bigger","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":1,"phrasing":"I can't read this, the letters are too small","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":1,"phrasing":"Increase the font size","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":2,"phrasing":"Turn off notifications","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":2,"phrasing":"Stop the app from sending me alerts","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":2,"phrasing":"Disable push messages","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":3,"phrasing":"Change the app language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":3,"phrasing":"Switch the app to Polish","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":3,"phrasing":"I want the app in another language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":4,"phrasing":"Buy a single ticket","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-type"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":6,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":4,"phrasing":"I need one ride ticket","success":false,"steps":3,"stop":"timeout","path":["home","tickets","ticket-history","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":1},{"a":"tap","id":8,"index":1}],"calls":3,"callMs":[0,0,0]}
+{"condition":"B","task":4,"phrasing":"Purchase a ticket for one trip","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-type"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":6,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":5,"phrasing":"See my past tickets","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":5,"phrasing":"Show the tickets I bought before","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":5,"phrasing":"Where is my ticket history","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":1}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":6,"phrasing":"Change my phone number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":6,"phrasing":"Update my mobile number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":6,"phrasing":"My number changed, fix it in my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":7,"phrasing":"Contact support","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":7,"phrasing":"I want to write to customer service","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"B","task":7,"phrasing":"Send a message to the help team","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":8,"phrasing":"Turn on dark mode","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":8,"phrasing":"Make the screen darker at night","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":8,"phrasing":"Switch to the dark theme","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":9,"phrasing":"Log out","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":9,"phrasing":"Sign me out of the app","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":9,"phrasing":"Log off my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":10,"phrasing":"Find the privacy policy","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":10,"phrasing":"How does the app use my data","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"B","task":10,"phrasing":"Show me the privacy rules","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":1,"phrasing":"Make the text bigger","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":1,"phrasing":"I can't read this, the letters are too small","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":1,"phrasing":"Increase the font size","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":2,"phrasing":"Turn off notifications","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":2,"phrasing":"Stop the app from sending me alerts","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":2,"phrasing":"Disable push messages","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":3,"phrasing":"Change the app language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":3,"phrasing":"Switch the app to Polish","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":3,"phrasing":"I want the app in another language","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":4,"phrasing":"Buy a single ticket","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-type"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":6,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":4,"phrasing":"I need one ride ticket","success":false,"steps":3,"stop":"timeout","path":["home","tickets","ticket-history","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":1},{"a":"tap","id":8,"index":1}],"calls":3,"callMs":[0,0,0]}
+{"condition":"C","task":4,"phrasing":"Purchase a ticket for one trip","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-type"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":6,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":5,"phrasing":"See my past tickets","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":5,"phrasing":"Show the tickets I bought before","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":0}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":5,"phrasing":"Where is my ticket history","success":true,"steps":2,"stop":"success","path":["home","tickets","ticket-history"],"actions":[{"a":"tap","id":19,"index":5},{"a":"tap","id":8,"index":1}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":6,"phrasing":"Change my phone number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":6,"phrasing":"Update my mobile number","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":6,"phrasing":"My number changed, fix it in my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":7,"phrasing":"Contact support","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":7,"phrasing":"I want to write to customer service","success":false,"steps":1,"stop":"ask","path":["home","alerts"],"actions":[{"a":"tap","id":11,"index":2}],"calls":2,"callMs":[0,0]}
+{"condition":"C","task":7,"phrasing":"Send a message to the help team","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":8,"phrasing":"Turn on dark mode","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":8,"phrasing":"Make the screen darker at night","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":8,"phrasing":"Switch to the dark theme","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":9,"phrasing":"Log out","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":9,"phrasing":"Sign me out of the app","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":9,"phrasing":"Log off my account","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":10,"phrasing":"Find the privacy policy","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":10,"phrasing":"How does the app use my data","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}
+{"condition":"C","task":10,"phrasing":"Show me the privacy rules","success":false,"steps":0,"stop":"ask","path":["home"],"actions":[],"calls":1,"callMs":[0]}

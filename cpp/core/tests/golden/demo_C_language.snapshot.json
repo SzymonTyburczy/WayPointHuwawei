@@ -1,0 +1,329 @@
+{
+ "rev": "",
+ "surfaceId": 1,
+ "viewport": {
+  "x": 0,
+  "y": 0,
+  "w": 360,
+  "h": 780
+ },
+ "nodes": [
+  {
+   "id": 1,
+   "parent": null,
+   "depth": 0,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 780
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 2,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 56
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 3,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button",
+    "label": "Back"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 48
+   },
+   "testID": "header-back"
+  },
+  {
+   "id": 4,
+   "parent": 3,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 16,
+    "y": 16,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_arrow_back"
+  },
+  {
+   "id": 5,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "header"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 60,
+    "y": 12,
+    "w": 240,
+    "h": 32
+   },
+   "text": "Language",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 22,
+   "bold": true,
+   "testID": "title-language"
+  },
+  {
+   "id": 6,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "ScrollView",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 724
+   }
+  },
+  {
+   "id": 7,
+   "parent": 6,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 724
+   }
+  },
+  {
+   "id": 8,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "radio"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "lang-english"
+  },
+  {
+   "id": 9,
+   "parent": 8,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 80,
+    "w": 328,
+    "h": 24
+   },
+   "text": "English",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 10,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "radio"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 120,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "lang-polski"
+  },
+  {
+   "id": 11,
+   "parent": 10,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 136,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Polski",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 12,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "radio"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 176,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "lang-deutsch"
+  },
+  {
+   "id": 13,
+   "parent": 12,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 192,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Deutsch",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  }
+ ]
+}

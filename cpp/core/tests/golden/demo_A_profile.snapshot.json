@@ -1,0 +1,602 @@
+{
+ "rev": "",
+ "surfaceId": 1,
+ "viewport": {
+  "x": 0,
+  "y": 0,
+  "w": 360,
+  "h": 780
+ },
+ "nodes": [
+  {
+   "id": 1,
+   "parent": null,
+   "depth": 0,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 780
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 2,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 56
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 3,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "header"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 12,
+    "w": 240,
+    "h": 32
+   },
+   "text": "Profile",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 22,
+   "bold": true,
+   "testID": "title-profile"
+  },
+  {
+   "id": 4,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 308,
+    "y": 4,
+    "w": 48,
+    "h": 48
+   },
+   "testID": "profile-help"
+  },
+  {
+   "id": 5,
+   "parent": 4,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 320,
+    "y": 16,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_help"
+  },
+  {
+   "id": 6,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "ScrollView",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 660
+   }
+  },
+  {
+   "id": 7,
+   "parent": 6,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 660
+   }
+  },
+  {
+   "id": 8,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 64,
+    "w": 328,
+    "h": 32
+   },
+   "text": "Anna Kowalska",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 20,
+   "testID": "profile-name"
+  },
+  {
+   "id": 9,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 16,
+    "y": 104,
+    "w": 48,
+    "h": 48
+   },
+   "testID": "profile-edit"
+  },
+  {
+   "id": 10,
+   "parent": 9,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 28,
+    "y": 116,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_edit"
+  },
+  {
+   "id": 11,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "profile-details"
+  },
+  {
+   "id": 12,
+   "parent": 11,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 176,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Details",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 13,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 216,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "profile-details-2"
+  },
+  {
+   "id": 14,
+   "parent": 13,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 232,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Details",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 15,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 272,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "profile-logout"
+  },
+  {
+   "id": 16,
+   "parent": 15,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 288,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Log out",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 17,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 716,
+    "w": 360,
+    "h": 64
+   },
+   "bg": {
+    "r": 0.9647058823529412,
+    "g": 0.9529411764705882,
+    "b": 0.9803921568627451,
+    "a": 1
+   }
+  },
+  {
+   "id": 18,
+   "parent": 17,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-home"
+  },
+  {
+   "id": 19,
+   "parent": 18,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 33,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_home"
+  },
+  {
+   "id": 20,
+   "parent": 17,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 90,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-tickets"
+  },
+  {
+   "id": 21,
+   "parent": 20,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 123,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_ticket"
+  },
+  {
+   "id": 22,
+   "parent": 17,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": true
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 180,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-profile"
+  },
+  {
+   "id": 23,
+   "parent": 22,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 213,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_person"
+  },
+  {
+   "id": 24,
+   "parent": 17,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 270,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-settings"
+  },
+  {
+   "id": 25,
+   "parent": 24,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 303,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_gear"
+  }
+ ]
+}

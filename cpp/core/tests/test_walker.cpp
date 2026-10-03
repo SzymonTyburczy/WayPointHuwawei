@@ -203,6 +203,9 @@ TEST(rev_is_stable_and_detects_name_change) {
   b.node(200).text = "Display";
   b.node(2).frame.x = 0.2;
   EXPECT_EQ(b.done().rev, s1.rev);
+  // A toggled state is a change.
+  b.node(2).a11y.checked = "true";
+  EXPECT_TRUE(b.done().rev != s1.rev);
 }
 
 TEST(finalize_is_idempotent) {

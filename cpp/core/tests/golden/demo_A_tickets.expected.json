@@ -1,0 +1,22 @@
+[
+ {
+  "rule": "R1",
+  "testID": "tab-home"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-tickets"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-profile"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-settings"
+ },
+ {
+  "rule": "R3",
+  "testID": "tickets-validity"
+ }
+]

@@ -20,7 +20,7 @@ numbers in brackets (§n) point into the RFC.
 
 Kept minimal and backwards-compatible; each one is documented in `docs/ARCHITECTURE.md`.
 
-- `UiNode.a11y` gains optional `selected` and `checked` (the guide serialisation in §9 prints `selected`).
+- `UiNode.a11y` gains optional `selected` and `checked` (the guide serialisation in §9 prints `selected`); both also enter the `rev` hash so a toggled switch counts as a screen change.
 - `UiNode` gains optional `placeholder`, `runs` (per-fragment colour/size for mixed-style text, §6 "worst fragment"), `pressable` (plan B: JS registry reported a press handler) and `drawsImage` (gradient/image background → contrast "unknown", §7).
 - `Snapshot` gains optional `error` and `partial` (§13 failure table).
 - `audit()` returns a report object `{ findings, counts, contrastUnknown, partial, nodeCount }` instead of a bare `Finding[]`; `Waypoint.audit()` adds `rev`.

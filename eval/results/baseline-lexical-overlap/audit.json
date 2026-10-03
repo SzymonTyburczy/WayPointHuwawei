@@ -1,0 +1,304 @@
+{
+  "findings": [
+    {
+      "rule": "R1",
+      "testID": "home-search",
+      "screen": "home",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Search",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R6",
+      "testID": "home-banner",
+      "screen": "home",
+      "severity": "warning",
+      "message": "Image has no accessible name"
+    },
+    {
+      "rule": "R2",
+      "testID": "home-banner-close",
+      "screen": "home",
+      "severity": "error",
+      "message": "Touch target is 16 vp; the minimum is 24 vp"
+    },
+    {
+      "rule": "R1",
+      "testID": "tab-home",
+      "screen": "home",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Home",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R1",
+      "testID": "tab-tickets",
+      "screen": "home",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Ticket",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R1",
+      "testID": "tab-profile",
+      "screen": "home",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Person",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R1",
+      "testID": "tab-settings",
+      "screen": "home",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Gear",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R3",
+      "testID": "tickets-validity",
+      "screen": "tickets",
+      "severity": "error",
+      "message": "Text contrast 2.61:1 is below 4.5:1"
+    },
+    {
+      "rule": "R2",
+      "testID": "ticket-info",
+      "screen": "ticket-type",
+      "severity": "error",
+      "message": "Touch target is 20 vp; the minimum is 24 vp"
+    },
+    {
+      "rule": "R3",
+      "testID": "history-updated",
+      "screen": "ticket-history",
+      "severity": "error",
+      "message": "Text contrast 2.17:1 is below 4.5:1"
+    },
+    {
+      "rule": "R1",
+      "testID": "profile-help",
+      "screen": "profile",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Help",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R1",
+      "testID": "profile-edit",
+      "screen": "profile",
+      "severity": "error",
+      "message": "Actionable element has no accessible name",
+      "suggestion": {
+        "label": "Edit",
+        "confidence": "low"
+      }
+    },
+    {
+      "rule": "R5",
+      "testID": "profile-details-2",
+      "screen": "profile",
+      "severity": "warning",
+      "message": "Another actionable element has the same name \"Details\""
+    },
+    {
+      "rule": "R1",
+      "testID": "edit-phone",
+      "screen": "edit-profile",
+      "severity": "error",
+      "message": "Actionable element has no accessible name"
+    },
+    {
+      "rule": "R4",
+      "testID": "edit-save",
+      "screen": "edit-profile",
+      "severity": "warning",
+      "message": "Actionable element has no accessibility role"
+    },
+    {
+      "rule": "R4",
+      "testID": "settings-language",
+      "screen": "settings",
+      "severity": "warning",
+      "message": "Actionable element has no accessibility role"
+    },
+    {
+      "rule": "R2",
+      "testID": "display-dark-mode",
+      "screen": "display",
+      "severity": "warning",
+      "message": "Touch target is 36 vp; 44 vp is recommended"
+    },
+    {
+      "rule": "R3",
+      "testID": "fontsize-preview",
+      "screen": "font-size",
+      "severity": "error",
+      "message": "Text contrast 2.68:1 is below 4.5:1"
+    },
+    {
+      "rule": "R2",
+      "testID": "notif-email",
+      "screen": "notifications",
+      "severity": "error",
+      "message": "Touch target is 20 vp; the minimum is 24 vp"
+    },
+    {
+      "rule": "R3",
+      "testID": "privacy-footer",
+      "screen": "privacy",
+      "severity": "error",
+      "message": "Text contrast 1.88:1 is below 4.5:1"
+    }
+  ],
+  "rules": [
+    {
+      "rule": "R1",
+      "seeded": 8,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "rule": "R2",
+      "seeded": 4,
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "rule": "R3",
+      "seeded": 4,
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "rule": "R4",
+      "seeded": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "rule": "R5",
+      "seeded": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "rule": "R6",
+      "seeded": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "recall": 1,
+      "precision": 1
+    }
+  ],
+  "falsePositives": [],
+  "missed": [],
+  "labels": {
+    "r1Defects": 8,
+    "suggested": 7,
+    "fromModel": 0,
+    "fromFallback": 7,
+    "accepted": 5,
+    "rows": [
+      {
+        "testID": "tab-home",
+        "label": "Home",
+        "confidence": "low",
+        "accepted": true
+      },
+      {
+        "testID": "tab-tickets",
+        "label": "Ticket",
+        "confidence": "low",
+        "accepted": true
+      },
+      {
+        "testID": "tab-profile",
+        "label": "Person",
+        "confidence": "low",
+        "accepted": false
+      },
+      {
+        "testID": "tab-settings",
+        "label": "Gear",
+        "confidence": "low",
+        "accepted": false
+      },
+      {
+        "testID": "home-search",
+        "label": "Search",
+        "confidence": "low",
+        "accepted": true
+      },
+      {
+        "testID": "profile-help",
+        "label": "Help",
+        "confidence": "low",
+        "accepted": true
+      },
+      {
+        "testID": "profile-edit",
+        "label": "Edit",
+        "confidence": "low",
+        "accepted": true
+      },
+      {
+        "testID": "edit-phone",
+        "accepted": false
+      }
+    ]
+  },
+  "overrides": {
+    "home-search": "Search",
+    "tab-home": "Home",
+    "tab-tickets": "Ticket",
+    "tab-profile": "Person",
+    "tab-settings": "Gear",
+    "profile-help": "Help",
+    "profile-edit": "Edit"
+  },
+  "contrastUnknown": 0,
+  "suggestStats": {
+    "asked": 21,
+    "accepted": 0,
+    "rejected": {
+      "generic": 21
+    },
+    "fallbacks": 19,
+    "backendFailures": 0
+  }
+}

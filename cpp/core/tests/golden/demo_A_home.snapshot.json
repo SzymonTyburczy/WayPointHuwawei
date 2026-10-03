@@ -1,0 +1,575 @@
+{
+ "rev": "",
+ "surfaceId": 1,
+ "viewport": {
+  "x": 0,
+  "y": 0,
+  "w": 360,
+  "h": 780
+ },
+ "nodes": [
+  {
+   "id": 1,
+   "parent": null,
+   "depth": 0,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 780
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 2,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 360,
+    "h": 56
+   },
+   "bg": {
+    "r": 1,
+    "g": 1,
+    "b": 1,
+    "a": 1
+   }
+  },
+  {
+   "id": 3,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "header"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 12,
+    "w": 240,
+    "h": 32
+   },
+   "text": "CityRide",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 22,
+   "bold": true,
+   "testID": "title-home"
+  },
+  {
+   "id": 4,
+   "parent": 2,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 308,
+    "y": 4,
+    "w": 48,
+    "h": 48
+   },
+   "testID": "home-search"
+  },
+  {
+   "id": 5,
+   "parent": 4,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 320,
+    "y": 16,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_search"
+  },
+  {
+   "id": 6,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "ScrollView",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 660
+   }
+  },
+  {
+   "id": 7,
+   "parent": 6,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 56,
+    "w": 360,
+    "h": 660
+   }
+  },
+  {
+   "id": 8,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 64,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Good morning, Anna",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 15,
+   "testID": "home-greeting"
+  },
+  {
+   "id": 9,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 96,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "home-plan"
+  },
+  {
+   "id": 10,
+   "parent": 9,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 112,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Plan a journey",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 11,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 152,
+    "w": 360,
+    "h": 56
+   },
+   "testID": "home-alerts"
+  },
+  {
+   "id": 12,
+   "parent": 11,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Paragraph",
+   "frame": {
+    "x": 16,
+    "y": 168,
+    "w": 328,
+    "h": 24
+   },
+   "text": "Service alerts",
+   "fg": {
+    "r": 0.06666666666666667,
+    "g": 0.06666666666666667,
+    "b": 0.06666666666666667,
+    "a": 1
+   },
+   "fontSize": 16
+  },
+  {
+   "id": 13,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 16,
+    "y": 208,
+    "w": 328,
+    "h": 120
+   },
+   "imageSrc": "promo_summer_sale",
+   "testID": "home-banner"
+  },
+  {
+   "id": 14,
+   "parent": 7,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "button",
+    "label": "Hide offer"
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 16,
+    "y": 336,
+    "w": 16,
+    "h": 16
+   },
+   "testID": "home-banner-close"
+  },
+  {
+   "id": 15,
+   "parent": 14,
+   "depth": 4,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 16,
+    "y": 336,
+    "w": 16,
+    "h": 16
+   },
+   "imageSrc": "ic_close"
+  },
+  {
+   "id": 16,
+   "parent": 1,
+   "depth": 1,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 716,
+    "w": 360,
+    "h": 64
+   },
+   "bg": {
+    "r": 0.9647058823529412,
+    "g": 0.9529411764705882,
+    "b": 0.9803921568627451,
+    "a": 1
+   }
+  },
+  {
+   "id": 17,
+   "parent": 16,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": true
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 0,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-home"
+  },
+  {
+   "id": 18,
+   "parent": 17,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 33,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_home"
+  },
+  {
+   "id": 19,
+   "parent": 16,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 90,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-tickets"
+  },
+  {
+   "id": 20,
+   "parent": 19,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 123,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_ticket"
+  },
+  {
+   "id": 21,
+   "parent": 16,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 180,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-profile"
+  },
+  {
+   "id": 22,
+   "parent": 21,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 213,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_person"
+  },
+  {
+   "id": 23,
+   "parent": 16,
+   "depth": 2,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": true,
+    "hidden": false,
+    "role": "tab",
+    "selected": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "View",
+   "frame": {
+    "x": 270,
+    "y": 716,
+    "w": 90,
+    "h": 64
+   },
+   "testID": "tab-settings"
+  },
+  {
+   "id": 24,
+   "parent": 23,
+   "depth": 3,
+   "visible": true,
+   "opacity": 1,
+   "a11y": {
+    "accessible": false,
+    "hidden": false
+   },
+   "actionable": false,
+   "name": "",
+   "component": "Image",
+   "frame": {
+    "x": 303,
+    "y": 736,
+    "w": 24,
+    "h": 24
+   },
+   "imageSrc": "ic_gear"
+  }
+ ]
+}

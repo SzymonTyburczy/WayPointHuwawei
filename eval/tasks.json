@@ -1,0 +1,26 @@
+{
+  "start": "home",
+  "maxSteps": 8,
+  "tasks": [
+    { "id": 1, "target": "fontsize-large", "screen": "font-size",
+      "phrasings": ["Make the text bigger", "I can't read this, the letters are too small", "Increase the font size"] },
+    { "id": 2, "target": "notif-push", "screen": "notifications",
+      "phrasings": ["Turn off notifications", "Stop the app from sending me alerts", "Disable push messages"] },
+    { "id": 3, "target": "lang-english", "screen": "language",
+      "phrasings": ["Change the app language", "Switch the app to Polish", "I want the app in another language"] },
+    { "id": 4, "target": "ticket-single", "screen": "ticket-type",
+      "phrasings": ["Buy a single ticket", "I need one ride ticket", "Purchase a ticket for one trip"] },
+    { "id": 5, "target": "history-list", "screen": "ticket-history",
+      "phrasings": ["See my past tickets", "Show the tickets I bought before", "Where is my ticket history"] },
+    { "id": 6, "target": "edit-phone", "screen": "edit-profile",
+      "phrasings": ["Change my phone number", "Update my mobile number", "My number changed, fix it in my account"] },
+    { "id": 7, "target": "contact-form", "screen": "contact",
+      "phrasings": ["Contact support", "I want to write to customer service", "Send a message to the help team"] },
+    { "id": 8, "target": "display-dark-mode", "screen": "display",
+      "phrasings": ["Turn on dark mode", "Make the screen darker at night", "Switch to the dark theme"] },
+    { "id": 9, "target": "logout-confirm", "screen": "logout",
+      "phrasings": ["Log out", "Sign me out of the app", "Log off my account"] },
+    { "id": 10, "target": "privacy-policy-text", "screen": "privacy-policy",
+      "phrasings": ["Find the privacy policy", "How does the app use my data", "Show me the privacy rules"] }
+  ]
+}

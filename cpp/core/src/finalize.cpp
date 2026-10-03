@@ -51,6 +51,9 @@ std::string computeRev(const Snapshot& snap) {
     for (double v : {n.frame.x, n.frame.y, n.frame.w, n.frame.h}) fnv(h, std::to_string(std::llround(v)));
     fnv(h, n.name);
     fnv(h, n.text);
+    // Additive: state changes (a toggled switch, a selected tab) are screen changes too.
+    fnv(h, n.a11y.checked);
+    fnv(h, n.a11y.selected ? (*n.a11y.selected ? "1" : "0") : "");
   }
   char buf[17];
   std::snprintf(buf, sizeof buf, "%016llx", static_cast<unsigned long long>(h));

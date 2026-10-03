@@ -1,0 +1,30 @@
+[
+ {
+  "rule": "R1",
+  "testID": "tab-home"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-tickets"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-profile"
+ },
+ {
+  "rule": "R1",
+  "testID": "tab-settings"
+ },
+ {
+  "rule": "R1",
+  "testID": "home-search"
+ },
+ {
+  "rule": "R2",
+  "testID": "home-banner-close"
+ },
+ {
+  "rule": "R6",
+  "testID": "home-banner"
+ }
+]

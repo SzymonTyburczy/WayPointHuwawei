@@ -22,7 +22,8 @@ void dropOverlay(Snapshot& snap);
 
 void finalize(Snapshot& snap);
 
-// FNV-1a 64-bit over (id, rounded frame, name, text) of every node, as 16 hex digits.
+// FNV-1a 64-bit over (id, rounded frame, name, text, checked, selected) of every
+// node, as 16 hex digits. checked/selected are additive to RFC §5.
 std::string computeRev(const Snapshot& snap);
 
 }  // namespace waypoint

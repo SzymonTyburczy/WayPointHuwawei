@@ -1,0 +1,25 @@
+{
+  "description": "Seeded defects in the demo app (RFC-001 §12). Matching is by rule and testID. acceptedLabels lists labels that count as correct for M3.",
+  "defects": [
+    { "rule": "R1", "testID": "tab-home", "screen": "home", "acceptedLabels": ["Home", "Home tab", "Go home", "Start"] },
+    { "rule": "R1", "testID": "tab-tickets", "screen": "home", "acceptedLabels": ["Tickets", "Ticket", "My tickets", "Tickets tab", "Buy tickets"] },
+    { "rule": "R1", "testID": "tab-profile", "screen": "home", "acceptedLabels": ["Profile", "My profile", "Account", "My account", "Profile tab"] },
+    { "rule": "R1", "testID": "tab-settings", "screen": "home", "acceptedLabels": ["Settings", "Open settings", "Preferences", "Settings tab"] },
+    { "rule": "R1", "testID": "home-search", "screen": "home", "acceptedLabels": ["Search", "Search stops", "Find stop", "Search stops and lines"] },
+    { "rule": "R1", "testID": "profile-help", "screen": "profile", "acceptedLabels": ["Help", "Get help", "Support", "Help and support", "Contact support"] },
+    { "rule": "R1", "testID": "profile-edit", "screen": "profile", "acceptedLabels": ["Edit profile", "Edit", "Edit details", "Edit account"] },
+    { "rule": "R1", "testID": "edit-phone", "screen": "edit-profile", "acceptedLabels": ["Phone number", "Phone", "Mobile number", "Phone number field"] },
+    { "rule": "R2", "testID": "home-banner-close", "screen": "home" },
+    { "rule": "R2", "testID": "ticket-info", "screen": "ticket-type" },
+    { "rule": "R2", "testID": "display-dark-mode", "screen": "display" },
+    { "rule": "R2", "testID": "notif-email", "screen": "notifications" },
+    { "rule": "R3", "testID": "tickets-validity", "screen": "tickets" },
+    { "rule": "R3", "testID": "history-updated", "screen": "ticket-history" },
+    { "rule": "R3", "testID": "fontsize-preview", "screen": "font-size" },
+    { "rule": "R3", "testID": "privacy-footer", "screen": "privacy" },
+    { "rule": "R4", "testID": "edit-save", "screen": "edit-profile" },
+    { "rule": "R4", "testID": "settings-language", "screen": "settings" },
+    { "rule": "R5", "testID": "profile-details-2", "screen": "profile" },
+    { "rule": "R6", "testID": "home-banner", "screen": "home" }
+  ]
+}

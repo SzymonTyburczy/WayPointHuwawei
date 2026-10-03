@@ -1,0 +1,10 @@
+[
+ {
+  "rule": "R1",
+  "testID": "edit-phone"
+ },
+ {
+  "rule": "R4",
+  "testID": "edit-save"
+ }
+]
