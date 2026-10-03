@@ -9,6 +9,10 @@ option(WAYPOINT_BUILD_TESTS "Build host unit tests" ON)
 option(WAYPOINT_BUILD_CLI "Build the waypoint-cli host tool" ON)
 option(WAYPOINT_WITH_LLAMA "Build the llama.cpp LocalBackend" OFF)
 
+if(WAYPOINT_BUILD_TESTS)
+  enable_testing()
+endif()
+
 add_subdirectory(core)
 
 if(WAYPOINT_BUILD_CLI)
@@ -19,6 +23,5 @@ endif()
 add_subdirectory(llm)
 
 if(WAYPOINT_BUILD_TESTS)
-  enable_testing()
   add_subdirectory(core/tests)
 endif()

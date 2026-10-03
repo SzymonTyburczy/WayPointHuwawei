@@ -28,8 +28,8 @@ export function DeviceEval() {
         nav.reset();
         await sleep(800);
         let success = false;
-        const watcher = setInterval(() => {
-          const snap = runtime.snapshot();
+        const watcher = setInterval(async () => {
+          const snap = await runtime.takeSnapshot();
           if (snap.nodes.some((x) => x.testID === task.target && x.visible)) {
             success = true;
             stopGuide();

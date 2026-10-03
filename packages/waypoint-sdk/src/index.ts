@@ -38,9 +38,11 @@ export {
   type BackendConfig,
   type LocalConfig,
   type RemoteConfig,
+  type SnapshotSource,
 } from './runtime';
 export { WaypointProvider, type WaypointProviderProps } from './react/WaypointProvider';
-export { useGuide, useWaypointOverride } from './react/hooks';
+export { useGuide, useWaypointOverride, useWaypointTarget } from './react/hooks';
+export { TargetRegistry, type Measurable, type TargetInfo } from './registry/TargetRegistry';
 export { useWaypoint } from './react/context';
 export { GuideOverlay } from './react/GuideOverlay';
 export { AuditOverlay, type AuditOverlayProps } from './react/AuditOverlay';

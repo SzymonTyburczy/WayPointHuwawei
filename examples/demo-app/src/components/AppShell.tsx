@@ -1,6 +1,7 @@
 // Header, scrolling body and tab bar for the current screen of the spec.
 import { useEffect } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useWaypointTarget } from 'waypoint-sdk';
 
 import { COLORS, FONT, GAP, HEADER_H, ICON, ICON_BUTTON, PAD, TAB_BAR_H } from '../app/layout';
 import { activeTab, current } from '../app/navigation';
@@ -15,16 +16,19 @@ export function AppShell() {
   const screen = screenById(current(nav.state));
   useEffect(() => registerBack(nav.back), [nav.back]);
   useEffect(() => registerPresser('header-back', nav.back), [nav.back]);
+  // Not mounted on root screens; the registry skips refs that are not attached.
+  const backRef = useWaypointTarget<View>({ testID: 'header-back', role: 'button', label: 'Back', pressable: true });
+  const titleRef = useWaypointTarget<Text>({ component: 'Paragraph', testID: `title-${screen.id}`, text: screen.title, fontSize: FONT.title, role: 'header' });
 
   return (
     <View style={styles.root}>
       <View style={styles.header}>
         {!screen.root && (
-          <Pressable testID="header-back" accessibilityRole="button" accessibilityLabel="Back" onPress={nav.back} style={styles.headerButton}>
+          <Pressable ref={backRef} testID="header-back" accessibilityRole="button" accessibilityLabel="Back" onPress={nav.back} style={styles.headerButton}>
             <Image source={ICONS.ic_arrow_back} style={styles.icon} />
           </Pressable>
         )}
-        <Text testID={`title-${screen.id}`} accessibilityRole="header" style={[styles.title, { marginLeft: screen.root ? PAD : 8 }]}>
+        <Text ref={titleRef} testID={`title-${screen.id}`} accessibilityRole="header" style={[styles.title, { marginLeft: screen.root ? PAD : 8 }]}>
           {screen.title}
         </Text>
         {screen.headerAction && <HeaderActionButton action={screen.headerAction} />}
@@ -50,8 +54,10 @@ function HeaderActionButton({ action }: { action: HeaderAction }) {
   const label = useLabel(action);
   const press = () => nav.push(action.to);
   useEffect(() => registerPresser(action.testID, press));
+  const ref = useWaypointTarget<View>({ testID: action.testID, role: 'button', label, imageSrc: action.icon, pressable: true });
   return (
     <Pressable
+      ref={ref}
       testID={action.testID}
       accessibilityRole="button"
       accessibilityLabel={label}
@@ -68,8 +74,10 @@ function Tab({ tab, selected }: { tab: TabSpec; selected: boolean }) {
   const label = useLabel(tab);
   const press = () => nav.tab(tab.screen);
   useEffect(() => registerPresser(tab.testID, press));
+  const ref = useWaypointTarget<View>({ testID: tab.testID, role: 'tab', label, selected, imageSrc: tab.icon, pressable: true });
   return (
     <Pressable
+      ref={ref}
       testID={tab.testID}
       accessibilityRole="tab"
       accessibilityLabel={label}

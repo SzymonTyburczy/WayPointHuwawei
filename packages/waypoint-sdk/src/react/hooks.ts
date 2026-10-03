@@ -1,4 +1,6 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
+
+import type { Measurable, TargetInfo } from '../registry/TargetRegistry';
 
 import { useWaypoint } from './context';
 
@@ -30,4 +32,23 @@ export function useWaypointOverride(testID: string | undefined, fallback?: strin
     () => undefined,
   );
   return label ?? fallback;
+}
+
+/**
+ * Plan B registration (RFC §6): attach the returned ref to the host component and
+ * pass what a screen reader would need. Inert while the shadow-tree walker works.
+ */
+export function useWaypointTarget<T extends Measurable>(info: TargetInfo) {
+  const { runtime } = useWaypoint();
+  const ref = useRef<T | null>(null);
+  const latest = useRef(info);
+  latest.current = info;
+  useEffect(() => {
+    if (!runtime) return undefined;
+    return runtime.registry.register(ref, latest.current);
+  }, [runtime]);
+  useEffect(() => {
+    runtime?.registry.update(ref, info);
+  });
+  return ref;
 }

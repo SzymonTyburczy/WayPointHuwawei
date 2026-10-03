@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cpp:
+    name: C++ core (host tests, ASan/UBSan)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Configure
+        run: cmake -S cpp -B cpp/build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all"
+      - name: Build
+        run: cmake --build cpp/build
+      - name: Test
+        run: ctest --test-dir cpp/build --output-on-failure
+
+  llm:
+    name: llama.cpp backend (tiny random model)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Configure (fetches the pinned llama.cpp commit)
+        run: cmake -S cpp -B cpp/build-llm -G Ninja -DCMAKE_BUILD_TYPE=Release -DWAYPOINT_WITH_LLAMA=ON
+      - name: Build
+        run: cmake --build cpp/build-llm
+      - name: Test
+        run: ctest --test-dir cpp/build-llm --output-on-failure
+
+  js:
+    name: SDK and evaluation harness
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Build waypoint-cli
+        run: |
+          cmake -S cpp -B cpp/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DWAYPOINT_BUILD_TESTS=OFF
+          cmake --build cpp/build --target waypoint-cli
+      - name: SDK
+        working-directory: packages/waypoint-sdk
+        run: |
+          npm ci
+          npm run typecheck
+          npm test
+      - name: Evaluation harness
+        working-directory: eval
+        run: |
+          npm ci
+          npm run typecheck
+          npm test
+          npm run all -- --backend lexical --out results/ci-lexical
+      - name: Golden snapshots are up to date
+        working-directory: eval
+        run: |
+          npm run golden
+          git diff --exit-code -- ../cpp/core/tests/golden
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eval-ci-lexical
+          path: eval/results/ci-lexical
+
+  demo-app:
+    name: Demo app (typecheck, HarmonyOS bundle)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: SDK dependencies
+        working-directory: packages/waypoint-sdk
+        run: npm ci
+      - name: Typecheck and bundle
+        working-directory: examples/demo-app
+        run: |
+          npm ci
+          npm run typecheck
+          npx react-native bundle-harmony --dev false --bundle-output /tmp/bundle.harmony.js --assets-dest /tmp/assets
+
+  rnoh-headers:
+    name: cxxTurboModules against RNOH headers
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: sudo apt-get update && sudo apt-get install -y clang
+      - run: harmony/tools/check_rnoh_headers.sh

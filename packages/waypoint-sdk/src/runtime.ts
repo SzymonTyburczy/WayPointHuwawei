@@ -9,8 +9,9 @@ import { FallbackBackend, LocalBackend } from './llm/LocalBackend';
 import { LoggingBackend, type LogSink } from './llm/logging';
 import { RemoteBackend, type RemoteBackendOptions } from './llm/RemoteBackend';
 import { OverrideStore } from './overrides';
+import { TargetRegistry } from './registry/TargetRegistry';
 import type { Spec as LlmSpec } from './specs/NativeWaypointLlm';
-import type { AuditReport, Snapshot } from './types';
+import type { AuditReport, Rect, Snapshot } from './types';
 
 export type RemoteConfig = { kind: 'remote' } & RemoteBackendOptions;
 export type LocalConfig = {
@@ -51,22 +52,45 @@ export interface AuditResult {
   stats: SuggestStats;
 }
 
+/**
+ * shadow-tree: the C++ walker (RFC §6).
+ * registry: plan B, components registered with useWaypointTarget.
+ * auto: the walker, falling back to the registry when the walker fails.
+ */
+export type SnapshotSource = 'shadow-tree' | 'registry' | 'auto';
+
 export class WaypointRuntime {
   readonly overrides = new OverrideStore();
+  readonly registry = new TargetRegistry();
+  viewport: Rect = { x: 0, y: 0, w: 0, h: 0 };
 
   constructor(
     readonly core: CoreApi,
     readonly backend: LlmBackend | null,
     public surfaceId: number,
+    public snapshotSource: SnapshotSource = 'auto',
   ) {}
 
+  /** Synchronous walker snapshot; see takeSnapshot() for the plan B fallback. */
   snapshot(): Snapshot {
     return this.core.snapshot(this.surfaceId);
   }
 
+  async takeSnapshot(): Promise<Snapshot> {
+    if (this.snapshotSource !== 'registry') {
+      const s = this.core.snapshot(this.surfaceId);
+      if (!s.error || this.snapshotSource === 'shadow-tree' || this.registry.size === 0) return s;
+    }
+    try {
+      return this.core.finalize(await this.registry.rawSnapshot(this.surfaceId, this.viewport));
+    } catch (e) {
+      return { rev: '', surfaceId: this.surfaceId, viewport: this.viewport, nodes: [], error: e instanceof Error ? e.message : String(e) };
+    }
+  }
+
   /** Snapshot, rules and label suggestions in one call. Never throws. */
   async auditWithSnapshot(): Promise<AuditResult> {
-    const snapshot = this.snapshot();
+    const snapshot = await this.takeSnapshot();
     const empty: SuggestStats = { asked: 0, accepted: 0, rejected: {}, fallbacks: 0, backendFailures: 0 };
     if (snapshot.error) {
       const report: AuditReport = {
@@ -91,7 +115,7 @@ export class WaypointRuntime {
 
   createGuide(extra: Omit<GuideDeps, 'core' | 'backend' | 'snapshot'> = {}): GuideSession {
     if (this.backend instanceof LoggingBackend) this.backend.purpose = 'guide';
-    return new GuideSession({ core: this.core, backend: this.backend, snapshot: () => this.snapshot(), ...extra });
+    return new GuideSession({ core: this.core, backend: this.backend, snapshot: () => this.takeSnapshot(), ...extra });
   }
 }
 
@@ -109,6 +133,6 @@ function requireRuntime(): WaypointRuntime {
 /** Static API: `const report = await Waypoint.audit()`. */
 export const Waypoint = {
   audit: (): Promise<AuditReport> => requireRuntime().audit(),
-  snapshot: (): Snapshot => requireRuntime().snapshot(),
+  snapshot: (): Promise<Snapshot> => requireRuntime().takeSnapshot(),
   runtime: (): WaypointRuntime | null => current,
 };

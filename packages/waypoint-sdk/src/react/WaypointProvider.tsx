@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { RootTagContext, StyleSheet, View } from 'react-native';
+import { RootTagContext, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import type { CoreApi } from '../core/CoreApi';
 import { createNativeCore } from '../core/NativeCore';
 import type { GuideOptions, GuideSession, GuideState, StepEvent } from '../guide/GuideSession';
 import type { LogSink } from '../llm/logging';
-import { createBackend, setCurrentRuntime, WaypointRuntime, type BackendConfig } from '../runtime';
+import { createBackend, setCurrentRuntime, WaypointRuntime, type BackendConfig, type SnapshotSource } from '../runtime';
 import NativeWaypointLlm from '../specs/NativeWaypointLlm';
 import NativeWaypointPlatform from '../specs/NativeWaypointPlatform';
 import { idleGuide, WaypointContext } from './context';
@@ -21,6 +21,8 @@ export interface WaypointProviderProps {
   guideOptions?: Partial<GuideOptions>;
   /** Speak captions through the platform module (stretch item 1). */
   speak?: boolean;
+  /** Where snapshots come from; "auto" falls back to plan B when the walker fails. */
+  snapshotSource?: SnapshotSource;
   /** Whether a system back action makes sense right now (e.g. not on a root tab). */
   canGoBack?: () => boolean;
   /** Test-only hook used by the demo app's evaluation autopilot. */
@@ -41,14 +43,16 @@ export function WaypointProvider(props: WaypointProviderProps) {
       // A refused or broken backend disables the guide; the audit still runs (RFC §13).
       console.warn(`Waypoint: backend disabled: ${e instanceof Error ? e.message : String(e)}`);
     }
-    return new WaypointRuntime(core, backend, rootTag);
+    return new WaypointRuntime(core, backend, rootTag, props.snapshotSource ?? 'auto');
     // The backend config is read once per mount; remount the provider to change it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [injectedCore]);
 
+  const { width, height } = useWindowDimensions();
   useEffect(() => {
     if (runtime) runtime.surfaceId = rootTag;
   }, [runtime, rootTag]);
+  if (runtime) runtime.viewport = { x: 0, y: 0, w: width, h: height };
 
   useEffect(() => {
     setCurrentRuntime(runtime);

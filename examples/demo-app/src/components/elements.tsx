@@ -2,7 +2,7 @@
 // come from src/app/layout.ts and match eval/src/simulator.ts.
 import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, TextInput, View, type AccessibilityRole } from 'react-native';
-import { useWaypointOverride } from 'waypoint-sdk';
+import { useWaypointOverride, useWaypointTarget } from 'waypoint-sdk';
 
 import { COLORS, FONT, GAP, HEIGHTS, ICON, PAD } from '../app/layout';
 import { useNav } from '../app/NavContext';
@@ -53,8 +53,9 @@ function Row({ el }: { el: El }) {
   const label = useLabel(el);
   const onPress = useGo(el) ?? noop;
   useAutopilot(el.testID, onPress);
+  const ref = useWaypointTarget<View>({ testID: el.testID, role: role(el), label, text: el.text, pressable: true });
   return (
-    <Pressable testID={el.testID} accessibilityRole={role(el)} accessibilityLabel={label} onPress={onPress} style={styles.row}>
+    <Pressable ref={ref} testID={el.testID} accessibilityRole={role(el)} accessibilityLabel={label} onPress={onPress} style={styles.row}>
       <Text style={styles.rowText}>{el.text}</Text>
     </Pressable>
   );
@@ -63,8 +64,9 @@ function Row({ el }: { el: El }) {
 function Paragraph({ el }: { el: El }) {
   const size = el.fontSize ?? FONT.text;
   const height = size >= 20 ? HEIGHTS.textLarge : HEIGHTS.text;
+  const ref = useWaypointTarget<Text>({ component: 'Paragraph', testID: el.testID, text: el.text, fontSize: size, fg: el.fg ?? COLORS.text });
   return (
-    <Text testID={el.testID} style={[styles.paragraph, { fontSize: size, height, color: el.fg ?? COLORS.text }]}>
+    <Text ref={ref} testID={el.testID} style={[styles.paragraph, { fontSize: size, height, color: el.fg ?? COLORS.text }]}>
       {el.text}
     </Text>
   );
@@ -72,8 +74,10 @@ function Paragraph({ el }: { el: El }) {
 
 function Banner({ el }: { el: El }) {
   const label = useLabel(el);
+  const ref = useWaypointTarget<Image>({ component: 'Image', testID: el.testID, label, imageSrc: el.icon, accessible: !!label });
   return (
     <Image
+      ref={ref}
       testID={el.testID}
       source={ICONS[el.icon ?? '']}
       accessible={!!label}
@@ -91,8 +95,10 @@ function IconButton({ el }: { el: El }) {
   useAutopilot(el.testID, onPress);
   const w = el.w ?? HEIGHTS.icon;
   const h = el.h ?? HEIGHTS.icon;
+  const ref = useWaypointTarget<View>({ testID: el.testID, role: role(el), label, imageSrc: el.icon, pressable: true });
   return (
     <Pressable
+      ref={ref}
       testID={el.testID}
       accessibilityRole={role(el)}
       accessibilityLabel={label}
@@ -111,10 +117,12 @@ function Toggle({ el }: { el: El }) {
   useAutopilot(el.testID, flip);
   const w = el.w ?? 48;
   const h = el.h ?? 48;
+  const ref = useWaypointTarget<View>({ component: 'Switch', testID: el.testID, role: 'switch', label, checked: on, pressable: true });
   return (
     <View style={styles.toggleRow}>
       <Text style={styles.toggleText}>{el.text}</Text>
       <Pressable
+        ref={ref}
         testID={el.testID}
         accessibilityRole="switch"
         accessibilityLabel={label}
@@ -129,10 +137,11 @@ function Toggle({ el }: { el: El }) {
 function Input({ el }: { el: El }) {
   const label = useLabel(el);
   const [value, setValue] = useState('');
+  const ref = useWaypointTarget<TextInput>({ component: 'TextInput', testID: el.testID, label });
   return (
     <View style={styles.inputBlock}>
       {el.caption ? <Text style={styles.caption}>{el.caption}</Text> : null}
-      <TextInput testID={el.testID} accessibilityLabel={label} value={value} onChangeText={setValue} style={styles.input} />
+      <TextInput ref={ref} testID={el.testID} accessibilityLabel={label} value={value} onChangeText={setValue} style={styles.input} />
     </View>
   );
 }
@@ -141,8 +150,9 @@ function PrimaryButton({ el }: { el: El }) {
   const label = useLabel(el);
   const onPress = useGo(el) ?? noop;
   useAutopilot(el.testID, onPress);
+  const ref = useWaypointTarget<View>({ testID: el.testID, role: role(el), label, text: el.text, pressable: true, fg: COLORS.onPrimary, bg: COLORS.primary });
   return (
-    <Pressable testID={el.testID} accessibilityRole={role(el)} accessibilityLabel={label} onPress={onPress} style={styles.button}>
+    <Pressable ref={ref} testID={el.testID} accessibilityRole={role(el)} accessibilityLabel={label} onPress={onPress} style={styles.button}>
       <Text style={styles.buttonText}>{el.text}</Text>
     </Pressable>
   );
