@@ -1,0 +1,12 @@
+build/
+cpp/build/
+node_modules/
+dist/
+*.gguf
+*.hap
+.DS_Store
+eval/results/raw/
+.cxx/
+oh_modules/
+.hvigor/
+local.properties
