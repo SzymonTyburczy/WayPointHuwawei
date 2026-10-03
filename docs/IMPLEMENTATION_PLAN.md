@@ -216,3 +216,25 @@ Stated up front so nobody mistakes "compiles on Linux" for "runs on HarmonyOS":
 - `eval` smoke run reproduces SR(A) < SR(B) ≤ SR(C) with the lexical baseline and audit recall 20/20 on the simulated app.
 - Every §13 failure row has a test or, for device-only rows, a checklist entry.
 - No secrets, no model files, no generated binaries in git.
+
+## 7. Status
+
+| Work package | State | Evidence |
+| --- | --- | --- |
+| WP0 Repository, CI, docs | done | `.github/workflows/ci.yml`, `README.md`, `docs/` |
+| WP1 Data model, JSON | done | `cpp/core/tests/test_json_color.cpp`, `test_walker.cpp` |
+| WP2 Colour and contrast | done | RFC vectors in `test_json_color.cpp` |
+| WP3 Walker, finalize | done (host) | `test_walker.cpp`; RNOH adapter compiles against RNOH headers; device check = S2 |
+| WP4 Rules R1–R6 | done | `test_rules.cpp`, 39 golden snapshots |
+| WP5 Label suggestions | done | `test_planner_labels.cpp`, `audit.test.ts` |
+| WP6 Planner, grammar, parser | done | `test_planner_labels.cpp` |
+| WP7 Host CLI | done | used by every JS test |
+| WP8 JS SDK | done | 38 Jest tests; plan B registry included |
+| WP9 Local inference | done (host) | `cpp/llm/tests`; device build pending S1 |
+| WP10 RNOH integration | written, header-checked | `harmony/tools/check_rnoh_headers.sh`; `.hap` pending S1 |
+| WP11 Demo app | done | typecheck, Metro HarmonyOS bundle; device run pending S1 |
+| WP12 Evaluation harness | done | `eval/` tests; baseline results committed; model run pending |
+| WP13 Docs and release | docs done | `.hap`, video and model numbers pending |
+
+Remaining work needs hardware or a model: spikes S1–S4, the `.hap`, the model run
+of `eval`, the screen-reader checklist and the demo recording.
