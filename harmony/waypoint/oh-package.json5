@@ -1,0 +1,11 @@
+{
+  name: '@waypoint/react-native-waypoint',
+  version: '0.1.0',
+  description: 'Waypoint accessibility auditor and on-device guide: RNOH native package',
+  main: 'index.ets',
+  author: 'Waypoint contributors',
+  license: 'MIT',
+  dependencies: {
+    '@rnoh/react-native-openharmony': 'file:../../examples/demo-app/harmony/react_native_openharmony'
+  }
+}

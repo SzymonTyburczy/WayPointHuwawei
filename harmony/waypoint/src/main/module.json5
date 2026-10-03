@@ -1,0 +1,7 @@
+{
+  module: {
+    name: 'waypoint',
+    type: 'har',
+    deviceTypes: ['default', 'phone', 'tablet', '2in1']
+  }
+}

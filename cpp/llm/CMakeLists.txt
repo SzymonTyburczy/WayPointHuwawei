@@ -1,1 +1,55 @@
-# Placeholder until the LocalBackend lands.
+# SHA-256 is always built (host tests, model checksum). The llama.cpp backend is
+# built with -DWAYPOINT_WITH_LLAMA=ON, from -DWAYPOINT_LLAMA_DIR=<checkout> or by
+# fetching the commit pinned in LLAMA_CPP_COMMIT.
+add_library(waypoint_llm_util STATIC src/sha256.cpp)
+target_include_directories(waypoint_llm_util PUBLIC include)
+set_target_properties(waypoint_llm_util PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+if(WAYPOINT_BUILD_TESTS)
+  add_executable(waypoint_sha256_tests tests/test_sha256.cpp)
+  target_link_libraries(waypoint_sha256_tests PRIVATE waypoint_llm_util waypoint_core)
+  target_include_directories(waypoint_sha256_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../core/tests)
+  add_test(NAME sha256 COMMAND waypoint_sha256_tests)
+endif()
+
+if(NOT WAYPOINT_WITH_LLAMA)
+  return()
+endif()
+
+set(WAYPOINT_LLAMA_DIR "" CACHE PATH "Existing llama.cpp checkout; fetched at the pinned commit when empty")
+set(LLAMA_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_SERVER OFF CACHE BOOL "" FORCE)
+set(LLAMA_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+set(LLAMA_CURL OFF CACHE BOOL "" FORCE)
+set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+
+if(WAYPOINT_LLAMA_DIR)
+  add_subdirectory(${WAYPOINT_LLAMA_DIR} ${CMAKE_BINARY_DIR}/llama.cpp EXCLUDE_FROM_ALL)
+  set(WAYPOINT_LLAMA_SRC ${WAYPOINT_LLAMA_DIR})
+else()
+  include(FetchContent)
+  file(READ ${CMAKE_CURRENT_SOURCE_DIR}/LLAMA_CPP_COMMIT WAYPOINT_LLAMA_COMMIT)
+  string(STRIP "${WAYPOINT_LLAMA_COMMIT}" WAYPOINT_LLAMA_COMMIT)
+  FetchContent_Declare(llama_cpp GIT_REPOSITORY https://github.com/ggml-org/llama.cpp.git GIT_TAG ${WAYPOINT_LLAMA_COMMIT})
+  FetchContent_GetProperties(llama_cpp)
+  if(NOT llama_cpp_POPULATED)
+    FetchContent_Populate(llama_cpp)
+    add_subdirectory(${llama_cpp_SOURCE_DIR} ${llama_cpp_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif()
+  set(WAYPOINT_LLAMA_SRC ${llama_cpp_SOURCE_DIR})
+endif()
+
+add_library(waypoint_llm STATIC src/local_backend.cpp)
+target_link_libraries(waypoint_llm PUBLIC waypoint_llm_util llama)
+set_target_properties(waypoint_llm PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+if(WAYPOINT_BUILD_TESTS)
+  add_executable(waypoint_llm_tests tests/test_llm.cpp tests/tiny_model.cpp)
+  target_link_libraries(waypoint_llm_tests PRIVATE waypoint_llm waypoint_core ggml)
+  target_include_directories(waypoint_llm_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../core/tests)
+  target_compile_definitions(waypoint_llm_tests PRIVATE
+    WAYPOINT_VOCAB_GGUF="${WAYPOINT_LLAMA_SRC}/models/ggml-vocab-llama-spm.gguf")
+  add_test(NAME llm COMMAND waypoint_llm_tests)
+endif()
