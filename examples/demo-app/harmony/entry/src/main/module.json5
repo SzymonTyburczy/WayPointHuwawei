@@ -22,6 +22,15 @@
         "name": "ohos.permission.INTERNET"
       },
       {
+        // Voice control (docs/VOICE.md). Requested at the first press of the microphone.
+        "name": "ohos.permission.MICROPHONE",
+        "reason": "$string:microphone_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+        }
+      },
+      {
         "name": "ohos.permission.VIBRATE"
       }
     ],

@@ -197,3 +197,39 @@ TEST(report_json_has_counts) {
   EXPECT_EQ(j["counts"].num("errors"), 2.0);
   EXPECT_EQ(j["counts"].num("R6"), 0.0);
 }
+
+TEST(score_is_100_for_a_clean_screen_and_drops_with_defects) {
+  Builder clean = screen();
+  clean.button(2, 1, {0, 0, 360, 56}, "Display");
+  clean.button(3, 1, {0, 60, 360, 56}, "Privacy");
+  AuditReport good = audit(clean.done());
+  EXPECT_EQ(good.score.score, 100);
+  EXPECT_EQ(good.score.grade, std::string("A"));
+  EXPECT_EQ(good.score.distinct, 2);
+
+  // Four unnamed tabs and one named button: names share 1/5.
+  Builder tabs = screen();
+  for (int i = 0; i < 4; ++i) {
+    UiNode& t = tabs.add(10 + i, 1, "View", {i * 90.0, 716, 90, 64});
+    t.a11y.accessible = true;
+    t.a11y.role = "tab";
+  }
+  tabs.button(2, 1, {0, 64, 360, 56}, "Plan a journey");
+  AuditReport bad = audit(tabs.done());
+  EXPECT_NEAR(bad.score.names, 0.2, 1e-9);
+  EXPECT_EQ(bad.score.distinct, 1);
+  EXPECT_EQ(bad.score.score, 68);  // 40 * 0.2 + 20 + 20 + 10 + 10
+  EXPECT_EQ(bad.score.grade, std::string("D"));
+  Json j = toJson(bad);
+  EXPECT_EQ(j["score"].num("score"), 68.0);
+  EXPECT_EQ(j["score"].str("grade"), std::string("D"));
+}
+
+TEST(score_weights_r2_warnings_half) {
+  Builder b = screen();
+  b.button(2, 1, {0, 0, 100, 40}, "Warn");    // 40 vp: warning
+  b.button(3, 1, {0, 50, 100, 56}, "Fine");
+  AuditReport r = audit(b.done());
+  EXPECT_NEAR(r.score.targets, 0.75, 1e-9);
+  EXPECT_EQ(r.score.score, 95);
+}

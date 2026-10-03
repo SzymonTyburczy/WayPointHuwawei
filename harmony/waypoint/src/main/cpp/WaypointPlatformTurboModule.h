@@ -1,4 +1,5 @@
-// C++ glue for the ArkTS module WaypointPlatform (stretch, RFC-001 §11). The
+// C++ glue for the ArkTS module WaypointPlatform (speech in and out, screen-reader
+// state; RFC-001 §11 stretch item 1 and voice control). The
 // implementation lives in ets/WaypointPlatformTurboModule.ets; RNOH forwards
 // these methods to it.
 #pragma once

@@ -36,4 +36,7 @@ std::string findImageSrc(const Snapshot& snap, const SnapshotIndex& idx, int p);
 
 AuditReport audit(const Snapshot& snap, const AuditOptions& opts = {});
 
+// Weighted score from a report's findings (called by audit()).
+A11yScore scoreScreen(const Snapshot& snap, const AuditReport& report, const AuditOptions& opts = {});
+
 }  // namespace waypoint

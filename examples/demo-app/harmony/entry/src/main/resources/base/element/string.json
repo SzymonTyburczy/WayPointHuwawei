@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "CityRide"
+    },
+    {
+      "name": "microphone_reason",
+      "value": "Voice commands for the Waypoint guide"
     }
   ]
 }

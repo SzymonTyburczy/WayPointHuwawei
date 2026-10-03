@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { AuditOverlay, GuideBar, WaypointProvider } from 'waypoint-sdk';
+import { AuditOverlay, GuideBar, VoiceButton, WaypointProvider } from 'waypoint-sdk';
 
 import { canGoBack } from './app/navigation';
 import { NavProvider, useNav } from './app/NavContext';
 import { AppShell } from './components/AppShell';
-import { BACKEND, EVAL_AUTOPILOT, SPEAK_CAPTIONS } from './config';
+import { BACKEND, EVAL_AUTOPILOT, LISTEN_LANGUAGE, SPEAK_CAPTIONS, VOICE_LANG } from './config';
 import { autopilot } from './eval/autopilot';
 import { DeviceEval } from './eval/DeviceEval';
 
@@ -28,6 +28,7 @@ function WaypointShell() {
     >
       <AppShell />
       <GuideLauncher />
+      <VoiceButton lang={VOICE_LANG} listenLanguage={LISTEN_LANGUAGE} position={{ right: 16, bottom: 160 }} />
       {__DEV__ && <AuditOverlay fabPosition={{ right: 16, bottom: 88 }} />}
       {EVAL_AUTOPILOT && <DeviceEval />}
     </WaypointProvider>

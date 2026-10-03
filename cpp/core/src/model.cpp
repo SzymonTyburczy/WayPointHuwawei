@@ -1,6 +1,7 @@
 #include "waypoint/model.hpp"
 
 #include <algorithm>
+#include <cmath>
 
 #include "waypoint/color.hpp"
 
@@ -165,6 +166,18 @@ Json toJson(const AuditReport& r) {
   counts.set("warnings", warnings);
   j.set("findings", findings);
   j.set("counts", counts);
+  Json score = Json::object();
+  score.set("score", r.score.score);
+  score.set("grade", r.score.grade);
+  auto pct = [](double v) { return std::round(v * 1000) / 1000; };
+  score.set("names", pct(r.score.names));
+  score.set("targets", pct(r.score.targets));
+  score.set("contrast", pct(r.score.contrast));
+  score.set("roles", pct(r.score.roles));
+  score.set("images", pct(r.score.images));
+  score.set("actionable", r.score.actionable);
+  score.set("distinct", r.score.distinct);
+  j.set("score", score);
   j.set("contrastUnknown", r.contrastUnknown);
   j.set("partial", r.partial);
   j.set("nodeCount", static_cast<double>(r.nodeCount));

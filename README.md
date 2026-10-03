@@ -11,6 +11,10 @@ numbered list.
 > AI agents. A well-labelled app can be navigated by a small local model; a badly
 > labelled one cannot. Waypoint measures that gap and closes it.
 
+**New: voice control** in English and Polish. Say "make the text bigger" or
+„co tu jest?” and Waypoint speaks each step with the element's position.
+See [docs/VOICE.md](docs/VOICE.md).
+
 Design: [RFC-001](docs/rfc/RFC-001-waypoint.md) · Plan: [IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) ·
 Architecture: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · AI: [AI_FEATURES.md](docs/AI_FEATURES.md),
 [AI_WORKFLOW.md](docs/AI_WORKFLOW.md) · Device checks: [SPIKES.md](docs/SPIKES.md), [CONFORMANCE.md](docs/CONFORMANCE.md)

@@ -24,3 +24,7 @@ export const EVAL_AUTOPILOT = false;
 
 /** Speak captions with Core Speech Kit (stretch item 1). */
 export const SPEAK_CAPTIONS = false;
+
+/** Voice control (docs/VOICE.md): reply language ('auto' follows the speaker) and recognition language. */
+export const VOICE_LANG: 'en' | 'pl' | 'auto' = 'auto';
+export const LISTEN_LANGUAGE = 'en-US';

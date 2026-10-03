@@ -96,7 +96,7 @@ export function WaypointProvider(props: WaypointProviderProps) {
   useEffect(() => {
     if (!props.speak || !NativeWaypointPlatform || !guide.caption || guide.caption === lastSpoken.current) return;
     lastSpoken.current = guide.caption;
-    NativeWaypointPlatform.speak(guide.caption).catch(() => {});
+    NativeWaypointPlatform.speak(guide.caption, 'en-US').catch(() => {});
   }, [props.speak, guide.caption]);
 
   const value = useMemo(() => ({ runtime, guide, startGuide, stopGuide }), [runtime, guide, startGuide, stopGuide]);

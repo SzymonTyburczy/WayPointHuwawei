@@ -47,3 +47,8 @@ export { useWaypoint } from './react/context';
 export { GuideOverlay } from './react/GuideOverlay';
 export { AuditOverlay, type AuditOverlayProps } from './react/AuditOverlay';
 export { GuideBar } from './react/GuideBar';
+export { VoiceButton, type VoiceButtonProps } from './react/VoiceButton';
+export { VoiceController, type VoiceDeps, type VoiceTurn } from './voice/VoiceController';
+export { parseUtterance, guessLang, normalise, type VoiceIntent, type VoiceLang } from './voice/intents';
+export { describePosition, positionOf, say, type Position } from './voice/messages';
+export { PlatformSpeechInput, SPEECH_EVENT, type SpeechInput, type SpeechEvent, type ListenResult } from './voice/SpeechInput';

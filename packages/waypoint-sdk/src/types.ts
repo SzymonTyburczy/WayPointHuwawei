@@ -83,8 +83,23 @@ export interface AuditCounts {
   warnings: number;
 }
 
+/** 0–100 score per screen; each part is the share of elements that pass (0–1). */
+export interface A11yScore {
+  score: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F';
+  names: number; // weight 40: actionable elements with a unique name
+  targets: number; // weight 20
+  contrast: number; // weight 20
+  roles: number; // weight 10
+  images: number; // weight 10
+  actionable: number;
+  /** Actionable elements an agent or a screen-reader user can tell apart. */
+  distinct: number;
+}
+
 export interface AuditReport {
   rev?: string;
+  score?: A11yScore;
   findings: Finding[];
   counts: AuditCounts;
   contrastUnknown: number;

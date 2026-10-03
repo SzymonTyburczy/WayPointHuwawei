@@ -195,7 +195,44 @@ AuditReport audit(const Snapshot& snap, const AuditOptions& opts) {
       }
     }
   }
+  report.score = scoreScreen(snap, report, opts);
   return report;
+}
+
+A11yScore scoreScreen(const Snapshot& snap, const AuditReport& report, const AuditOptions& opts) {
+  const SnapshotIndex idx(snap);
+  int actionable = 0, texts = 0, images = 0;
+  for (size_t p = 0; p < snap.nodes.size(); ++p) {
+    const UiNode& n = snap.nodes[p];
+    if (n.actionable) ++actionable;
+    if (n.visible) {
+      auto c = evaluateContrast(snap, idx, static_cast<int>(p), opts);
+      if (c && c->known) ++texts;
+    }
+    if (n.component == "Image" && n.visible && !n.a11y.hidden) ++images;
+  }
+  double r1 = 0, r2 = 0, r3 = 0, r4 = 0, r5 = 0, r6 = 0;
+  for (const auto& f : report.findings) {
+    if (f.rule == "R1") r1 += 1;
+    else if (f.rule == "R2") r2 += f.severity == "error" ? 1.0 : 0.5;
+    else if (f.rule == "R3") r3 += 1;
+    else if (f.rule == "R4") r4 += 1;
+    else if (f.rule == "R5") r5 += 1;
+    else if (f.rule == "R6") r6 += 1;
+  }
+  auto share = [](double bad, int total) { return total == 0 ? 1.0 : std::clamp(1.0 - bad / total, 0.0, 1.0); };
+  A11yScore s;
+  s.actionable = actionable;
+  s.distinct = std::max(0, actionable - static_cast<int>(r1 + r5));
+  s.names = share(r1 + r5, actionable);
+  s.targets = share(r2, actionable);
+  s.contrast = share(r3, texts);
+  s.roles = share(r4, actionable);
+  // Grouped images (inside an accessible element) never produce R6, so they pass.
+  s.images = share(r6, images);
+  s.score = static_cast<int>(std::lround(40 * s.names + 20 * s.targets + 20 * s.contrast + 10 * s.roles + 10 * s.images));
+  s.grade = s.score >= 90 ? "A" : s.score >= 80 ? "B" : s.score >= 70 ? "C" : s.score >= 60 ? "D" : "F";
+  return s;
 }
 
 }  // namespace waypoint

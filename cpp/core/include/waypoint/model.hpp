@@ -95,7 +95,22 @@ struct Finding {
   std::optional<Suggestion> suggestion;
 };
 
+// Accessibility score (0-100) for one screen. Each part is the share of elements
+// that pass, in [0, 1]; an empty category counts as passing.
+struct A11yScore {
+  int score = 100;
+  std::string grade = "A";
+  double names = 1;     // actionable elements with a unique, non-empty name (weight 40)
+  double targets = 1;   // actionable elements of adequate size (weight 20)
+  double contrast = 1;  // text with sufficient contrast (weight 20)
+  double roles = 1;     // actionable elements with a role (weight 10)
+  double images = 1;    // images with a name or hidden from assistive technology (weight 10)
+  int actionable = 0;
+  int distinct = 0;     // actionable elements an agent or a screen-reader user can tell apart
+};
+
 struct AuditReport {
+  A11yScore score;
   std::vector<Finding> findings;
   int contrastUnknown = 0;
   bool partial = false;
