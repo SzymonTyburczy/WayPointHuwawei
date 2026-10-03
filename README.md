@@ -22,7 +22,7 @@ Architecture: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · AI: [AI_FEATURES.md](do
 | `cpp/core` | Tree walker, rules R1–R6, guide planner, GBNF grammars, action parser, label suggestions. No dependencies. | 53 host tests under ASan/UBSan, including 39 golden snapshots |
 | `cpp/llm` | On-device inference on llama.cpp (pinned commit), SHA-256 model check | Tests on a tiny random-weight GGUF: the grammar alone guarantees valid actions |
 | `cpp/cli` | `waypoint-cli`: the core on the host, used by the evaluation | Exercised by every JS test |
-| `packages/waypoint-sdk` | JS API, TurboModule specs, guide state machine, backends, audit and guide overlays | 35 Jest tests against the real C++ core |
+| `packages/waypoint-sdk` | JS API, TurboModule specs, guide state machine, backends, audit and guide overlays | 38 Jest tests against the real C++ core |
 | `harmony/waypoint` | RNOH package: shadow-tree adapter, `WaypointCore` and `WaypointLlm` cxxTurboModules, ArkTS `WaypointPlatform` | Syntax-checked against the React Native headers shipped in the RNOH 0.77.75 HAR; device build pending (S1/S2) |
 | `examples/demo-app` | CityRide, a transit app with 20 seeded defects, plus its DevEco container (API 20) | Typecheck; Metro builds the HarmonyOS release bundle |
 | `eval` | Simulator of the demo app, M1–M4 runners, Wilson intervals, `results.md` | 7 tests; CI smoke run with a non-LLM baseline |
