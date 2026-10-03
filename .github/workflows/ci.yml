@@ -50,6 +50,12 @@ jobs:
           npm ci
           npm run typecheck
           npm test
+      - name: waypoint-fix
+        working-directory: packages/waypoint-fix
+        run: |
+          npm ci
+          npm run typecheck
+          npm test
       - name: Evaluation harness
         working-directory: eval
         run: |
@@ -57,6 +63,8 @@ jobs:
           npm run typecheck
           npm test
           npm run all -- --backend lexical --out results/ci-lexical
+          npm run voice-demo
+          npm run report -- --out results/ci-lexical/report.html
       - name: Golden snapshots are up to date
         working-directory: eval
         run: |

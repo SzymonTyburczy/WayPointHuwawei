@@ -1,0 +1,19 @@
+{
+  "name": "waypoint-fix",
+  "version": "0.1.0",
+  "description": "Apply accepted Waypoint label suggestions to React Native source code",
+  "license": "MIT",
+  "bin": { "waypoint-fix": "src/cli.ts" },
+  "scripts": {
+    "test": "tsx --test src/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "fix": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "typescript": "~5.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2"
+  }
+}

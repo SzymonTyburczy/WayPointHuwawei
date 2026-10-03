@@ -11,9 +11,18 @@ numbered list.
 > AI agents. A well-labelled app can be navigated by a small local model; a badly
 > labelled one cannot. Waypoint measures that gap and closes it.
 
-**New: voice control** in English and Polish. Say "make the text bigger" or
-„co tu jest?” and Waypoint speaks each step with the element's position.
-See [docs/VOICE.md](docs/VOICE.md).
+## Beyond the RFC
+
+- **Voice control** in English and Polish. Say "make the text bigger" or „co tu jest?”
+  and Waypoint speaks each step with the element's position ("at the bottom left"),
+  reads what is on the screen and how many controls have no name.
+  [docs/VOICE.md](docs/VOICE.md)
+- **Accessibility score and visual report.** Every audit carries a 0–100 score and
+  the number of controls an assistant can tell apart. `npm run report` (in `eval/`)
+  draws every screen from its snapshot with each finding boxed, before and after the
+  fixes.
+- **Autofix.** `waypoint-fix` writes accepted labels into the source next to the
+  matching `testID`. [docs/AUTOFIX.md](docs/AUTOFIX.md)
 
 Design: [RFC-001](docs/rfc/RFC-001-waypoint.md) · Plan: [IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) ·
 Architecture: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · AI: [AI_FEATURES.md](docs/AI_FEATURES.md),
@@ -23,13 +32,14 @@ Architecture: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · AI: [AI_FEATURES.md](do
 
 | Path | What | Verified how |
 | --- | --- | --- |
-| `cpp/core` | Tree walker, rules R1–R6, guide planner, GBNF grammars, action parser, label suggestions. No dependencies. | 53 host tests under ASan/UBSan, including 39 golden snapshots |
+| `cpp/core` | Tree walker, rules R1–R6, guide planner, GBNF grammars, action parser, label suggestions. No dependencies. | 56 host tests under ASan/UBSan, including 39 golden snapshots |
 | `cpp/llm` | On-device inference on llama.cpp (pinned commit), SHA-256 model check | Tests on a tiny random-weight GGUF: the grammar alone guarantees valid actions |
 | `cpp/cli` | `waypoint-cli`: the core on the host, used by the evaluation | Exercised by every JS test |
-| `packages/waypoint-sdk` | JS API, TurboModule specs, guide state machine, backends, audit and guide overlays | 38 Jest tests against the real C++ core |
+| `packages/waypoint-sdk` | JS API, TurboModule specs, guide state machine, backends, audit and guide overlays | 70 Jest tests against the real C++ core |
 | `harmony/waypoint` | RNOH package: shadow-tree adapter, `WaypointCore` and `WaypointLlm` cxxTurboModules, ArkTS `WaypointPlatform` | Syntax-checked against the React Native headers shipped in the RNOH 0.77.75 HAR; device build pending (S1/S2) |
 | `examples/demo-app` | CityRide, a transit app with 20 seeded defects, plus its DevEco container (API 20) | Typecheck; Metro builds the HarmonyOS release bundle |
-| `eval` | Simulator of the demo app, M1–M4 runners, Wilson intervals, `results.md` | 7 tests; CI smoke run with a non-LLM baseline |
+| `eval` | Simulator of the demo app, M1–M4 runners, Wilson intervals, `results.md`, HTML report, voice demo | 7 tests; CI smoke run with a non-LLM baseline |
+| `packages/waypoint-fix` | Codemod that writes accepted labels into the source | 8 tests |
 
 **Not verified in this repository:** anything that needs DevEco Studio, the
 HarmonyOS SDK, an emulator or a device (the `.hap` build, the shadow-tree read on

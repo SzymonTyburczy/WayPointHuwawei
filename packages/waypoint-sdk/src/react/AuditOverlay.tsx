@@ -56,6 +56,11 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
     for (const f of result?.report.findings ?? []) accept(f);
   };
 
+  // For waypoint-fix: hdc hilog | grep WAYPOINT_FIXES | sed 's/.*WAYPOINT_FIXES //' > fixes.json
+  const exportFixes = () => {
+    console.log(`WAYPOINT_FIXES ${JSON.stringify({ fixes: runtime.overrides.entries() })}`);
+  };
+
   const counts = result?.report.counts;
   return (
     <View nativeID="waypoint-overlay" style={StyleSheet.absoluteFill} pointerEvents="box-none">
@@ -120,6 +125,9 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
             <Pressable accessibilityRole="button" style={styles.action} onPress={acceptAll}>
               <Text style={styles.actionText}>Accept all</Text>
             </Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Export accepted labels to the log" style={styles.action} onPress={exportFixes}>
+              <Text style={styles.actionText}>Export fixes</Text>
+            </Pressable>
             <Pressable accessibilityRole="button" style={styles.action} onPress={() => setPanel(false)}>
               <Text style={styles.actionText}>Show boxes</Text>
             </Pressable>
@@ -173,7 +181,7 @@ const styles = StyleSheet.create({
   patch: { flex: 1, fontFamily: 'monospace', fontSize: 12, color: '#0D47A1' },
   accept: { minHeight: 44, minWidth: 88, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0D47A1', borderRadius: 8 },
   acceptText: { color: '#FFFFFF', fontWeight: '700' },
-  actions: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
+  actions: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 8 },
   action: { minHeight: 44, paddingHorizontal: 12, justifyContent: 'center' },
   actionText: { color: '#0D47A1', fontWeight: '700', fontSize: 15 },
   fab: {
