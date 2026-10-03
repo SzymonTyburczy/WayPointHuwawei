@@ -230,3 +230,16 @@ TEST(snapshot_json_roundtrip) {
   Snapshot back = snapshotFromJson(Json::parse(toJson(s).dump()));
   EXPECT_EQ(toJson(back).dump(), toJson(s).dump());
 }
+
+TEST(overlay_subtree_is_dropped) {
+  Builder b;
+  b.add(1, std::nullopt, "View", {0, 0, 360, 780});
+  b.button(2, 1, {0, 0, 100, 48}, "App button");
+  b.add(3, 1, "View", {0, 0, 360, 780}).nativeID = "waypoint-overlay";
+  b.button(4, 3, {0, 700, 100, 48}, "Stop guide");
+  b.button(5, 1, {0, 100, 100, 48}, "After");
+  Snapshot s = b.done();
+  EXPECT_EQ(s.nodes.size(), size_t{5});
+  for (const auto& n : s.nodes) EXPECT_TRUE(n.name != "Stop guide");
+  EXPECT_EQ(s.nodes.back().name, std::string("After"));
+}

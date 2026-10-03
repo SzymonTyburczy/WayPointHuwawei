@@ -57,7 +57,27 @@ std::string computeRev(const Snapshot& snap) {
   return buf;
 }
 
+void dropOverlay(Snapshot& snap) {
+  bool any = false;
+  for (const auto& n : snap.nodes) any = any || n.nativeID == kOverlayNativeId;
+  if (!any) return;
+  SnapshotIndex idx(snap);
+  std::vector<bool> drop(snap.nodes.size(), false);
+  for (size_t p = 0; p < snap.nodes.size(); ++p) {
+    if (snap.nodes[p].nativeID != kOverlayNativeId) continue;
+    for (int q = static_cast<int>(p); q < idx.subtreeEnd(static_cast<int>(p)); ++q) drop[q] = true;
+  }
+  std::vector<UiNode> kept;
+  kept.reserve(snap.nodes.size());
+  for (size_t p = 0; p < snap.nodes.size(); ++p) {
+    if (!drop[p]) kept.push_back(std::move(snap.nodes[p]));
+  }
+  snap.nodes = std::move(kept);
+}
+
 void finalize(Snapshot& snap) {
+  // 0. Waypoint's own overlay is never part of the app's UI.
+  dropOverlay(snap);
   auto& nodes = snap.nodes;
   const int n = static_cast<int>(nodes.size());
   SnapshotIndex idx(snap);

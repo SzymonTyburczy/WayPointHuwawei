@@ -15,6 +15,11 @@ bool isTextComponent(const std::string& component);
 bool isInteractiveRole(const std::string& role);
 bool isNonInteractiveRole(const std::string& role);
 
+// Subtrees whose root has this nativeID (the SDK's guide and audit overlays) are
+// removed so Waypoint never audits or plans over its own UI.
+constexpr const char* kOverlayNativeId = "waypoint-overlay";
+void dropOverlay(Snapshot& snap);
+
 void finalize(Snapshot& snap);
 
 // FNV-1a 64-bit over (id, rounded frame, name, text) of every node, as 16 hex digits.
