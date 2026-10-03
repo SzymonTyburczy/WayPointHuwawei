@@ -78,6 +78,9 @@ WaypointCoreTurboModule::WaypointCoreTurboModule(std::shared_ptr<facebook::react
   methodMap_["labelRequest"] = MethodMetadata{2, [](jsi::Runtime& rt, TurboModule&, const jsi::Value* a, size_t n) {
     return str(rt, api::labelRequest(arg(rt, a, n, 0), static_cast<int64_t>(num(a, n, 1))));
   }};
+  methodMap_["announce"] = MethodMetadata{1, [](jsi::Runtime& rt, TurboModule&, const jsi::Value* a, size_t n) {
+    return str(rt, api::announce(arg(rt, a, n, 0)));
+  }};
   methodMap_["validateLabel"] = MethodMetadata{3, [](jsi::Runtime& rt, TurboModule&, const jsi::Value* a, size_t n) {
     return str(rt, api::validateLabel(arg(rt, a, n, 0), static_cast<int64_t>(num(a, n, 1)), arg(rt, a, n, 2)));
   }};

@@ -20,6 +20,8 @@ std::string parseAction(const std::string& text, const std::string& candidatesJs
 std::string labelRequest(const std::string& snapshotJson, int64_t nodeId);
 // -> {ok, reason?, label, patch}
 std::string validateLabel(const std::string& snapshotJson, int64_t nodeId, const std::string& label);
+// -> {items: [{id, text, name, role?, states?, unnamed?, frame}]} in screen-reader order
+std::string announce(const std::string& snapshotJson);
 // {"label":"..."} reply -> {label} or {error}
 std::string parseLabelReply(const std::string& text);
 

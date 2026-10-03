@@ -1,5 +1,6 @@
 import type {
   Action,
+  Announcement,
   AuditReport,
   Candidate,
   LabelRequest,
@@ -18,6 +19,7 @@ export interface CoreStrings {
   parseAction(text: string, candidatesJson: string): string;
   labelRequest(snapshotJson: string, nodeId: number): string;
   validateLabel(snapshotJson: string, nodeId: number, label: string): string;
+  announce?(snapshotJson: string): string;
 }
 
 export type ParsedAction = Action | { error: string };
@@ -31,6 +33,8 @@ export interface CoreApi {
   parseAction(text: string, candidates: Candidate[]): ParsedAction;
   labelRequest(snapshot: Snapshot, nodeId: number): LabelRequest;
   validateLabel(snapshot: Snapshot, nodeId: number, label: string): LabelValidation;
+  /** Screen-reader stops in swipe order; empty when the core predates it. */
+  announce(snapshot: Snapshot): Announcement[];
 }
 
 export class CoreError extends Error {}
@@ -90,6 +94,11 @@ export class JsonCore implements CoreApi {
 
   validateLabel(snapshot: Snapshot, nodeId: number, label: string): LabelValidation {
     return parse<LabelValidation>(this.impl.validateLabel(JSON.stringify(snapshot), nodeId, label));
+  }
+
+  announce(snapshot: Snapshot): Announcement[] {
+    if (!this.impl.announce) return [];
+    return parse<{ items: Announcement[] }>(this.impl.announce(JSON.stringify(snapshot))).items;
   }
 }
 

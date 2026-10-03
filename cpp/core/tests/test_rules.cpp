@@ -2,6 +2,7 @@
 
 #include "builder.hpp"
 #include "test.hpp"
+#include "waypoint/announce.hpp"
 #include "waypoint/rules.hpp"
 
 using namespace waypoint;
@@ -232,4 +233,52 @@ TEST(score_weights_r2_warnings_half) {
   AuditReport r = audit(b.done());
   EXPECT_NEAR(r.score.targets, 0.75, 1e-9);
   EXPECT_EQ(r.score.score, 95);
+}
+
+TEST(screen_reader_order_and_speech) {
+  Builder b = screen();
+  UiNode& title = b.add(2, 1, "Paragraph", {16, 16, 200, 32});
+  title.text = "Settings";
+  title.a11y.accessible = true;
+  title.a11y.role = "header";
+  b.button(3, 1, {0, 64, 360, 56}, "Display");
+  UiNode& sw = b.add(4, 1, "View", {300, 130, 48, 48});
+  sw.a11y.accessible = true;
+  sw.a11y.role = "switch";
+  sw.a11y.label = "Dark mode";
+  sw.a11y.checked = "true";
+  UiNode& tab = b.add(5, 1, "View", {0, 716, 90, 64});
+  tab.a11y.accessible = true;
+  tab.a11y.role = "tab";
+  tab.a11y.selected = true;
+  b.add(6, 5, "Image", {33, 736, 24, 24}).imageSrc = "ic_home";  // grouped, not a stop
+  UiNode& off = b.button(7, 1, {0, 64, 100, 48}, "Disabled thing");
+  off.a11y.disabled = true;
+  off.frame = {0, 600, 100, 48};
+  b.node(700).frame = {0, 600, 100, 48};
+  auto order = screenReaderOrder(b.done());
+  std::vector<std::string> said;
+  for (const auto& a : order) said.push_back(a.text);
+  EXPECT_EQ(said.size(), size_t{5});
+  EXPECT_EQ(said[0], std::string("Settings, heading"));
+  EXPECT_EQ(said[1], std::string("Display, button"));
+  EXPECT_EQ(said[2], std::string("Dark mode, switch, on"));
+  EXPECT_EQ(said[3], std::string("Tab, selected"));
+  EXPECT_TRUE(order[3].unnamed);
+  EXPECT_EQ(said[4], std::string("Disabled thing, button, disabled"));
+}
+
+TEST(r8_flags_focus_jumping_up_or_left) {
+  Builder b = screen();
+  b.button(2, 1, {0, 400, 360, 56}, "Second");
+  b.button(3, 1, {0, 100, 360, 56}, "First");   // after "Second" in the tree but above it
+  b.button(4, 1, {200, 600, 100, 48}, "Right");
+  b.button(5, 1, {16, 600, 100, 48}, "Left");   // same row, to the left
+  b.button(6, 1, {0, 700, 360, 48}, "Below");   // fine
+  AuditReport r = audit(b.done());
+  EXPECT_EQ(countRule(r, "R8"), 2);
+  EXPECT_EQ(findRule(r, "R8", 3)->data.str("direction"), std::string("up"));
+  EXPECT_EQ(findRule(r, "R8", 5)->data.str("direction"), std::string("left"));
+  EXPECT_EQ(findRule(r, "R8", 5)->data.str("from"), std::string("Right, button"));
+  EXPECT_EQ(toJson(r)["counts"].num("R8"), 2.0);
 }

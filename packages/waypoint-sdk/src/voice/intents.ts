@@ -12,6 +12,7 @@ export type VoiceIntent =
   | { kind: 'next' }
   | { kind: 'whereAmI' }
   | { kind: 'describe' }
+  | { kind: 'readAll' }
   | { kind: 'audit' }
   | { kind: 'help' }
   | { kind: 'empty' };
@@ -55,6 +56,10 @@ const COMMANDS: Array<[Exclude<VoiceIntent['kind'], 'goal' | 'empty'>, string[]]
       'przeczytaj ekran',
       'opisz ekran',
     ],
+  ],
+  [
+    'readAll',
+    ['read everything', 'read all', 'read it all', 'read the whole screen', 'przeczytaj wszystko', 'czytaj wszystko', 'przeczytaj caly ekran'],
   ],
   ['audit', ['audit', 'check accessibility', 'run the audit', 'accessibility check', 'sprawdz dostepnosc', 'audyt', 'zrob audyt']],
   ['help', ['help', 'what can you do', 'commands', 'pomoc', 'pomocy', 'co umiesz', 'jakie sa komendy']],

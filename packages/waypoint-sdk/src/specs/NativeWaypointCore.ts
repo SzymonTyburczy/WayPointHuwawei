@@ -12,6 +12,7 @@ export interface Spec extends TurboModule {
   parseAction(text: string, candidatesJson: string): string; // JSON Action | {error}
   labelRequest(snapshotJson: string, nodeId: number): string; // JSON LabelRequest
   validateLabel(snapshotJson: string, nodeId: number, label: string): string; // JSON LabelValidation
+  announce(snapshotJson: string): string; // JSON {items: Announcement[]}, screen-reader order
 }
 
 export default TurboModuleRegistry.get<Spec>('WaypointCore');

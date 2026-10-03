@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { findingBox } from '../overlay/geometry';
+import NativeWaypointPlatform from '../specs/NativeWaypointPlatform';
 import type { AuditResult } from '../runtime';
 import type { Finding, UiNode } from '../types';
 import { useWaypoint } from './context';
@@ -29,6 +30,7 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
   const [busy, setBusy] = useState(false);
   const [panel, setPanel] = useState(false);
   const [accepted, setAccepted] = useState<Record<number, boolean>>({});
+  const [transcript, setTranscript] = useState<string[]>([]);
 
   if (!runtime) return null;
   const viewport = { x: 0, y: 0, w: width, h: height };
@@ -54,6 +56,14 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
 
   const acceptAll = () => {
     for (const f of result?.report.findings ?? []) accept(f);
+  };
+
+  // Hear the screen the way a screen-reader user does.
+  const listen = () => {
+    if (!result) return;
+    const items = runtime.core.announce(result.snapshot);
+    setTranscript(items.map((a) => a.text));
+    NativeWaypointPlatform?.speak(items.map((a) => a.text).join('. '), 'en-US').catch(() => undefined);
   };
 
   // For waypoint-fix: hdc hilog | grep WAYPOINT_FIXES | sed 's/.*WAYPOINT_FIXES //' > fixes.json
@@ -90,6 +100,11 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
             <Text style={styles.note}>{result.report.contrastUnknown} text items over images were not checked</Text>
           )}
           {result.report.partial && <Text style={styles.note}>Partial report: the screen has too many nodes</Text>}
+          {transcript.length > 0 && (
+            <Text style={styles.transcript} accessibilityLabel="Screen reader transcript">
+              {transcript.map((t, i) => `${i + 1}. ${t}`).join('\n')}
+            </Text>
+          )}
           <ScrollView style={styles.list}>
             {result.report.findings.map((f, i) => (
               <View key={`${f.rule}-${f.nodeId}-${i}`} style={styles.row}>
@@ -124,6 +139,9 @@ export function AuditOverlay({ fabPosition = { right: 16, bottom: 88 } }: AuditO
           <View style={styles.actions}>
             <Pressable accessibilityRole="button" style={styles.action} onPress={acceptAll}>
               <Text style={styles.actionText}>Accept all</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Listen like a screen reader" style={styles.action} onPress={listen}>
+              <Text style={styles.actionText}>Listen</Text>
             </Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="Export accepted labels to the log" style={styles.action} onPress={exportFixes}>
               <Text style={styles.actionText}>Export fixes</Text>
@@ -171,6 +189,7 @@ const styles = StyleSheet.create({
   },
   panelTitle: { fontSize: 15, fontWeight: '700', color: '#111111' },
   note: { fontSize: 13, color: '#444444', marginTop: 4 },
+  transcript: { fontFamily: 'monospace', fontSize: 12, color: '#1B1B1F', backgroundColor: '#F1EEF6', borderRadius: 8, padding: 8, marginTop: 8 },
   list: { marginTop: 8 },
   row: { paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#CCCCCC' },
   rule: { fontSize: 14, fontWeight: '700' },

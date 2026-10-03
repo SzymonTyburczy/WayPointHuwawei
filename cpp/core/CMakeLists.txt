@@ -2,6 +2,7 @@
 # Consumed by the host build (cpp/CMakeLists.txt) and by the RNOH package
 # (harmony/waypoint/src/main/cpp/CMakeLists.txt).
 add_library(waypoint_core STATIC
+  src/announce.cpp
   src/api.cpp
   src/color.cpp
   src/finalize.cpp

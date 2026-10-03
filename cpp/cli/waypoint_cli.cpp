@@ -14,6 +14,7 @@
 //   label-request   {snapshot, nodeId}
 //   validate-label  {snapshot, nodeId, label}
 //   parse-label     {text}
+//   announce        {snapshot}                        screen-reader order and speech
 //   contrast        {fg, bg}                          hex colours
 //
 // Output is one JSON document on stdout. Exit code 1 when it is {"error": ...}.
@@ -47,7 +48,7 @@ int emit(const std::string& out) {
 }
 
 int usage() {
-  std::cerr << "usage: waypoint-cli <finalize|walk|audit|plan|parse|label-request|validate-label|parse-label|contrast>"
+  std::cerr << "usage: waypoint-cli <finalize|walk|audit|plan|parse|label-request|validate-label|parse-label|announce|contrast>"
                " [snapshot.json] < request.json\n";
   return 2;
 }
@@ -90,6 +91,7 @@ int main(int argc, char** argv) {
     return emit(api::validateLabel(snapshot, static_cast<int64_t>(req.num("nodeId")), req.str("label")));
   }
   if (cmd == "parse-label") return emit(api::parseLabelReply(req.str("text")));
+  if (cmd == "announce") return emit(api::announce(snapshot));
   if (cmd == "walk") {
     try {
       const Json* root = req.get("root");

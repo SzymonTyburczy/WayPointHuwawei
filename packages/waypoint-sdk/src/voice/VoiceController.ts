@@ -22,6 +22,8 @@ export interface VoiceDeps {
   lang?: VoiceLang | 'auto';
   /** How many element names "what is here" reads before "and N more". */
   maxNamesRead?: number;
+  /** How many screen-reader stops "read everything" speaks. */
+  maxReadAll?: number;
 }
 
 export interface VoiceTurn {
@@ -109,6 +111,14 @@ export class VoiceController {
         const named = plan.candidates.filter((c) => c.name).map((c) => c.name);
         const unnamed = plan.candidates.length - named.length;
         return say.describe(plan.title, named.slice(0, max), Math.max(0, named.length - max), unnamed, lang);
+      }
+      case 'readAll': {
+        // Exactly what a screen reader would say, swipe by swipe.
+        const snap = await this.deps.takeSnapshot();
+        if (snap.error) return say.didNotHear(lang);
+        const items = this.deps.core.announce(snap);
+        const max = this.deps.maxReadAll ?? 15;
+        return say.readAll(items.slice(0, max).map((a) => a.text), Math.max(0, items.length - max), lang);
       }
       case 'audit': {
         if (!this.deps.audit) return say.help(lang);

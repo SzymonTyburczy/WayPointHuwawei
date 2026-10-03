@@ -117,12 +117,17 @@ export const say = {
     }
     return out;
   },
+  readAll: (items: string[], more: number, lang: VoiceLang) => {
+    if (items.length === 0) return lang === 'pl' ? 'Czytnik nie ma tu nic do przeczytania.' : 'A screen reader finds nothing to read here.';
+    const tail = more ? (lang === 'pl' ? ` I ${more} więcej.` : ` And ${more} more.`) : '';
+    return `${items.join('. ')}.${tail}`;
+  },
   audit: (score: number, errors: number, warnings: number, lang: VoiceLang) =>
     lang === 'pl'
       ? `Wynik dostępności ${score} na 100. Błędy: ${errors}, ostrzeżenia: ${warnings}.`
       : `Accessibility score ${score} out of 100. ${errors} errors, ${warnings} warnings.`,
   help: (lang: VoiceLang) =>
     lang === 'pl'
-      ? 'Powiedz, co chcesz zrobić, na przykład: powiększ tekst. Możesz też powiedzieć: co tu jest, gdzie jestem, powtórz, dalej, wróć albo stop.'
-      : 'Tell me what you want to do, for example: make the text bigger. You can also say: what is here, where am I, repeat, next, back or stop.',
+      ? 'Powiedz, co chcesz zrobić, na przykład: powiększ tekst. Możesz też powiedzieć: co tu jest, przeczytaj wszystko, gdzie jestem, powtórz, dalej, wróć albo stop.'
+      : 'Tell me what you want to do, for example: make the text bigger. You can also say: what is here, read everything, where am I, repeat, next, back or stop.',
 };

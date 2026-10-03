@@ -26,6 +26,8 @@ describe('intents', () => {
     ["what's here?", 'describe'],
     ['sprawdź dostępność', 'audit'],
     ['pomoc', 'help'],
+    ['przeczytaj wszystko', 'readAll'],
+    ['read everything', 'readAll'],
     ['', 'empty'],
     ['   ', 'empty'],
   ])('%s → %s', (text, kind) => {
@@ -135,6 +137,12 @@ describe('voice controller', () => {
     const turn = await voice.handle('co tu jest');
     expect(turn.reply).toBe('Ekran Home. 3 elementy do dotknięcia: News i Settings. 1 element nie ma nazwy.');
     expect((await voice.handle('gdzie jestem')).reply).toBe('Jesteś na ekranie Home.');
+  });
+
+  test('read everything speaks the screen-reader transcript', async () => {
+    const { voice } = setup([]);
+    const reply = (await voice.handle('read everything')).reply;
+    expect(reply).toBe('Home. News, button. Tab. Settings, tab.'); // the unnamed tab is just "Tab"
   });
 
   test('audit reports the score', async () => {

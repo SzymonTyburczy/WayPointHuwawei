@@ -47,6 +47,9 @@ export class CliCoreStrings implements CoreStrings {
   validateLabel(snapshot: string, nodeId: number, label: string) {
     return this.call('validate-label', { snapshot: JSON.parse(snapshot), nodeId, label });
   }
+  announce(snapshot: string) {
+    return this.call('announce', { snapshot: JSON.parse(snapshot) });
+  }
 }
 
 export function createCliCore(cli?: string): CoreApi {

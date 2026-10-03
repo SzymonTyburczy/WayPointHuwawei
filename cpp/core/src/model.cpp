@@ -155,7 +155,7 @@ Json toJson(const AuditReport& r) {
   Json j = Json::object();
   Json findings = Json::array();
   Json counts = Json::object();
-  for (const char* rule : {"R1", "R2", "R3", "R4", "R5", "R6"}) counts.set(rule, 0);
+  for (const char* rule : {"R1", "R2", "R3", "R4", "R5", "R6", "R8"}) counts.set(rule, 0);
   int errors = 0, warnings = 0;
   for (const auto& f : r.findings) {
     findings.push(toJson(f));

@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <unordered_map>
 
+#include "waypoint/announce.hpp"
 #include "waypoint/color.hpp"
 #include "waypoint/finalize.hpp"
 #include "waypoint/text.hpp"
@@ -195,6 +196,34 @@ AuditReport audit(const Snapshot& snap, const AuditOptions& opts) {
       }
     }
   }
+  // R8: focus order. Consecutive screen-reader stops should move down, or right
+  // within a row (left-to-right UI). A stop entirely above the previous one, or
+  // entirely to its left in the same row, makes the reader jump back.
+  const auto order = screenReaderOrder(snap);
+  for (size_t i = 1; i < order.size(); ++i) {
+    const Rect& a = order[i - 1].frame;
+    const Rect& b = order[i].frame;
+    const double tol = 4;
+    const double overlap = std::min(a.bottom(), b.bottom()) - std::max(a.y, b.y);
+    const bool sameRow = overlap > 0.5 * std::min(a.h, b.h);
+    const char* dir = nullptr;
+    if (b.bottom() <= a.y - tol) dir = "up";
+    else if (sameRow && b.right() <= a.x + tol) dir = "left";
+    if (!dir) continue;
+    const int p = idx.pos(order[i].id);
+    if (p < 0) continue;
+    Finding f;
+    f.rule = "R8";
+    f.severity = "warning";
+    f.nodeId = order[i].id;
+    f.message = std::string("Screen-reader focus jumps ") + dir + " from \"" + order[i - 1].text + "\"";
+    f.data.set("component", nodes[p].component);
+    if (!nodes[p].testID.empty()) f.data.set("testID", nodes[p].testID);
+    f.data.set("direction", dir);
+    f.data.set("from", order[i - 1].text);
+    report.findings.push_back(std::move(f));
+  }
+
   report.score = scoreScreen(snap, report, opts);
   return report;
 }

@@ -2,6 +2,7 @@
 
 #include <exception>
 
+#include "waypoint/announce.hpp"
 #include "waypoint/finalize.hpp"
 #include "waypoint/json.hpp"
 #include "waypoint/labels.hpp"
@@ -88,6 +89,16 @@ std::string validateLabel(const std::string& snapshotJson, int64_t nodeId, const
     if (!v.ok) j.set("reason", v.reason);
     j.set("label", label);
     j.set("patch", labelPatch(label));
+    return j.dump();
+  });
+}
+
+std::string announce(const std::string& snapshotJson) {
+  return guarded([&] {
+    Json items = Json::array();
+    for (const auto& a : screenReaderOrder(load(snapshotJson))) items.push(toJson(a));
+    Json j = Json::object();
+    j.set("items", items);
     return j.dump();
   });
 }

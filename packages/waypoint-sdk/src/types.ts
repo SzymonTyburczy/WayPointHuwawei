@@ -55,7 +55,7 @@ export interface Snapshot {
   partial?: boolean;
 }
 
-export type RuleId = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6';
+export type RuleId = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'R8'; // R8: focus order (beyond the RFC)
 
 export interface Suggestion {
   label: string;
@@ -79,6 +79,7 @@ export interface AuditCounts {
   R4: number;
   R5: number;
   R6: number;
+  R8?: number;
   errors: number;
   warnings: number;
 }
@@ -158,4 +159,15 @@ export interface LabelValidation {
   reason?: string;
   label: string;
   patch: string;
+}
+
+/** One screen-reader stop, in swipe order. */
+export interface Announcement {
+  id: number;
+  text: string; // what the screen reader says, e.g. "Settings, tab, selected"
+  name: string;
+  role?: string;
+  states?: string;
+  unnamed?: boolean;
+  frame: Rect;
 }
