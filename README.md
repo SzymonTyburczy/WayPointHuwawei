@@ -11,6 +11,8 @@ numbered list.
 > AI agents. A well-labelled app can be navigated by a small local model; a badly
 > labelled one cannot. Waypoint measures that gap and closes it.
 
+**Demo video (36 s):** [docs/demo/Waypoint-demo.mp4](docs/demo/Waypoint-demo.mp4)
+
 ## Beyond the RFC
 
 - **Runs in a browser, no Huawei hardware needed.** `npm run web` (in `examples/demo-app`)
